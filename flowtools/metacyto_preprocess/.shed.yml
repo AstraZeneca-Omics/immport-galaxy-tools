@@ -1,0 +1,15 @@
+owner: iuc
+name: metacyto_preprocess
+description: This tool uses MetaCyto's preprocessing function to prepare sets of FCS files for a MetaCyto analysis.
+long_description: |
+    **Input**
+    This tool requires one or more sets of FCS files.
+    
+    **Output file**
+    This tool generates one or more FCS files containing optionally sub-sampled data from the input FCS data sets. The FCS data can optionally be compensated and/or transformed. A summary of the operations is also generated.
+   
+   https://www.immportgalaxy.org
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/master/flowtools/metacyto_preprocess
+type: unrestricted
