@@ -10,5 +10,5 @@ long_description: |
     https://www.immportgalaxy.org
 categories:
     - Flow Cytometry Analysis
-remote_repository_url: https://github.com/ImmPortDB/immport-galaxy/tree/master/tools/flowtools/analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/master/flowtools/metacyto_search_clr
 type: unrestricted
