@@ -4,6 +4,7 @@ description: This tool uses MetaCyto to search for clusters of cells correspondi
 long_description: |
     **Input**
     This tool requires the pre-processing summary generated for MetaCyto as well as the pre-processed FCS files.
+    Cluster definitions
     Please provide gate definitions as comma-separated lists of marker names, for instance "CD3+, CD4+, CD25+, Foxp3+".
     **Output**
     This tool generates a list of provided clusters definitions, as well as a table of the MFI for each marker in each cluster in each file, and proportion of each cluster in each file. A list of unused cluster definitions, if any, is also generated.
