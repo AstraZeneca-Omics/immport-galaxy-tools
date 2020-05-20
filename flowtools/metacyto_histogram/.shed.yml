@@ -1,0 +1,14 @@
+owner: iuc
+name: metacyto_histogram
+description: This tool generates histograms of the distribution of events after clustering with MetaCyto for provided gating definitions.
+long_description: |
+    **Input**
+    his tool requires a valid FCS file and a list of clusters as input.
+    
+    **Output**
+    This tool generates plots to show the distribution of cells in each cluster definition. The gray histograms show the distribution of markers in all cells. The red histograms show the distribution of markers in the identified cell subset.
+    https://www.immportgalaxy.org
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/master/flowtools/metacyto_histogram
+type: unrestricted
