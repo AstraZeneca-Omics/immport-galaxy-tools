@@ -1,0 +1,28 @@
+owner: iuc
+name: meta_autocluster
+description: This tool uses MetaCyto to cluster events automatically from several sets of FCS files.
+long_description: |
+    **Input**
+    This tool requires the pre-processing summary generated for MetaCyto as well as the pre-processed FCS files.
+    Parameters
+    Quantile threshold
+    This value represents the minimum proportion of events in a cluster that should express more (or less) than the cutoff value for a given marker. With a value of 0.8, a cluster will be labeled Marker1+ if over 80% of cells in the cluster express Marker1 at a higher level than a cutoff value determined by the clustering analysis.
+    Minimum Number of events
+    This value represents the minimum proportion of cells in each region after bisection. Keep this factor small to avoid bisecting uni-mode distributions.
+    Markers to exclude
+    Please provide a comma-separated list of the markers that should be excluded from the clustering analysis. By default, FSC, SSC, Time and Cell Length channels are excluded, but providing a list of markers overrides the default settings.
+    Additional cluster definitions
+    Please provide additional gate definitions as comma-separated lists of marker names, for instance "CD3+, CD4+, CD25+, Foxp3+".
+    FlowSOM - Number of meta-clusters
+    Please indicate the exact number of meta-clusters expected.
+    FlowSOM - Grid dimension
+    Please indicate the dimension of the grid for establishing the SOM. The dimension of the grid defines the number of clusters (height x width = cluster)
+    FlowSOM - Seed
+    Please indicate a random number to use as seed. To make your analysis reproducible, use the same seed.
+    **Output**
+    This tool generates a list of clusters identified, including optionally provided cluster definitions, as well as a table of the MFI for each marker in each cluster in each file, and proportion of each cluster in each file. A list of unused cluster definitions, if any, is also generated.
+    https://www.immportgalaxy.org
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/master/flowtools/metacyto_autocluster
+type: unrestricted
