@@ -1,6 +1,6 @@
 owner: iuc
 name: metacyto_glm_clr
-description: This tool uses MetaCyto to study the effect of independent variables on a givven cluster definition.
+description: This tool uses MetaCyto to study the effect of independent variables on a given cluster definition.
 long_description: |
     **Input**
     This tool requires the output from a MetaCyto clustering analysis, the cluster definition to study as well as a tabular file containing corresponding metadata (see below for formatting). At least one independent variable must be provided for the generalized linear model.
