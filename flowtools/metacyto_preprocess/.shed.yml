@@ -4,9 +4,15 @@ description: This tool uses MetaCyto's preprocessing function to prepare sets of
 long_description: |
     **Input**
     This tool requires one or more sets of FCS files.
+      The number provided for sub-sampling corresponds to the number of events randomly sampled from each FCS files.
     
     **Output file**
     This tool generates one or more FCS files containing optionally sub-sampled data from the input FCS data sets. The FCS data can optionally be compensated and/or transformed. A summary of the operations is also generated.
+    This tool uses the arcsinh transformation. If you would like to use another transformation algorithm, sets of files can be prepared independantly by using the following tools:
+      Merge and downsample FCS files with FlowSOM
+      Transform FCS data with optional compensation and automated gating with flowDensity.  
+    The workflow to use MetaCyto in R vs. ImmPort Galaxy are slightly different - please use the following tool in FCS File Tools to harmonize FCS files before MetaCyto pre-processing:
+      Edit markers or channels in FCS files
    
    https://www.immportgalaxy.org
 categories:
