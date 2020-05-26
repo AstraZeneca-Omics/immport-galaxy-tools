@@ -1,4 +1,4 @@
-owner: iuc
+owner: azomics
 name: metacyto_checkpanel
 description: This tool uses MetaCyto's panel summary function to compare marker names between groups of FCS files.
 long_description: |
