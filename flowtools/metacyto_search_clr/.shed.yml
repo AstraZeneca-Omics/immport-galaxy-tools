@@ -1,4 +1,4 @@
-owner: iuc
+owner: azomics
 name: metacyto_search_cl
 description: This tool uses MetaCyto to search for clusters of cells corresponding to provided gate definitions.
 long_description: |
