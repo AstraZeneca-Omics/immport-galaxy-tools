@@ -1,4 +1,4 @@
-owner: iuc
+owner: azomics
 name: metacyto_histogram
 description: This tool generates histograms of the distribution of events after clustering with MetaCyto for provided gating definitions.
 long_description: |
