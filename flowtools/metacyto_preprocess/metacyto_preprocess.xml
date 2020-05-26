@@ -1,4 +1,4 @@
-<tool id="metacyto_preprocess" name="Pre-process samples" version="1.0">
+<tool id="metacyto_preprocess" name="Pre-process samples" version="1.0+galaxy0">
   <description>for MetaCyto</description>
   <requirements>
     <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
