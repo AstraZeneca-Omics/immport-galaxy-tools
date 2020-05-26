@@ -1,4 +1,4 @@
-owner: iuc
+owner: azomics
 name: metacyto_glm_clr
 description: This tool uses MetaCyto to study the effect of independent variables on a given cluster definition.
 long_description: |
