@@ -2,6 +2,9 @@ owner: azomics
 name: metacyto_histogram
 description: This tool generates histograms of the distribution of events after clustering with MetaCyto for provided gating definitions.
 long_description: |
+    **Note**
+    This was written by immport-dev-team, only uploaded to the toolshed by azomics user.
+    
     **Input**
     his tool requires a valid FCS file and a list of clusters as input.
     
