@@ -2,6 +2,9 @@ owner: azomics
 name: metacyto_checkpanel
 description: This tool uses MetaCyto's panel summary function to compare marker names between groups of FCS files.
 long_description: |
+    **Note**
+    This was written by immport-dev-team, only uploaded to the toolshed by azomics user.
+    
     **Input**
     This tool requires the pre-processing summary generated for MetaCyto as well as the pre-processed FCS files.
     Cluster definitions
