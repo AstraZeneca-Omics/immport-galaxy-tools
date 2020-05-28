@@ -2,6 +2,9 @@ owner: azomics
 name: metacyto_glm_clr
 description: This tool uses MetaCyto to study the effect of independent variables on a given cluster definition.
 long_description: |
+   **Note**
+    This was written by immport-dev-team, only uploaded to the toolshed by azomics user.
+    
     **Input**
     This tool requires the output from a MetaCyto clustering analysis, the cluster definition to study as well as a tabular file containing corresponding metadata (see below for formatting). At least one independent variable must be provided for the generalized linear model.
     Parameters
