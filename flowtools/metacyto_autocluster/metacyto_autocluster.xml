@@ -1,7 +1,8 @@
 <tool id="metacyto_autocluster" name="Autoclustering analysis" version="1.0+galaxy0" profile="18.01">
   <description>using MetaCyto</description>
   <requirements>
-    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
+    <!-- <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement> -->
+    <!-- flowcore is already a dependency of MetaCyto -->
     <requirement type="package" version="1.4.0">bioconductor-metacyto</requirement>
   </requirements>
   <stdio>
