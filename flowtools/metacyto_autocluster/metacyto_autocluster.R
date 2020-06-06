@@ -197,7 +197,7 @@ args <- commandArgs(trailingOnly = TRUE)
 ex_param <- c("FSC-A", "FSC-W", "FSC-H", "FSC", "SSC", "SSC-A", "SSC-W",
               "SSC-H", "Time", "Cell_length", "cell_length", "CELL_LENGTH")
 
-if (args[5] != "" && args[5] != "None" && args[5] != "i.e.:FSC,SSC,CD88"){
+if (args[5] != "" && args[5] != "None"){
   tmp <- gsub(" ", "", args[5], fixed = TRUE)
   eparam <- unlist(strsplit(tmp, ","))
   ex_param <- toupper(eparam)

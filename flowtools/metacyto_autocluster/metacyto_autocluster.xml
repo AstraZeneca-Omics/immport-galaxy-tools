@@ -48,7 +48,7 @@
     </conditional>
     <param name="quantile" type="float" value="0.95" min="0.5" max="1" label="Quantile threshold" help="Minimum percent of cells in a cluster expressing more or less than the cutoff value of a marker. The default value is 0.95"/>
     <param name="min_event" type="float" value="0.05" min="0" max="0.5" label="Minimum percent of cells in the positive and negative region after bisection" help="The default value is 0.05. Keep this factor small to avoid bisecting uni-mode distributions."/>
-    <param name="ex_param" type="text" label="Markers to exclude from clustering analysis:" value="i.e.:FSC,SSC,CD88" help="By default FSC, SSC, Time and Cell Length channels are excluded. Providing markers to exclude overrides the default setting."/>
+    <param name="ex_param" type="text" label="Markers to exclude from clustering analysis:" help="By default FSC, SSC, Time and Cell Length channels are excluded. Providing markers to exclude overrides the default setting. i.e.:FSC,SSC,CD88"/>
     <conditional name="more_cluster_def">
       <param name="more_def" type="boolean" label="Add cluster definitions?" checked="false" truevalue="TRUE" falsevalue="FALSE" />
       <when value="TRUE">
