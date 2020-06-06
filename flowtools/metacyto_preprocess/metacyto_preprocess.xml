@@ -26,7 +26,7 @@
   </command>
   <inputs>
     <param name="sampling" type="integer" label="Number of events to sample FCS files to." help="0 will use all events from input files, default value is 5000." value="5000"/>
-    <param name="excluded_param" value="i.e.:FSC, SSC, CD88" type="text" label="Parameters to exclude from the transformation." help="By default FSC, SSC, Time and Cell Length channels are excluded. Providing markers to exclude overrides the default setting."/>
+    <param name="excluded_param" type="text" label="Parameters to exclude from the transformation." help="By default FSC, SSC, Time and Cell Length channels are excluded. Providing markers to exclude overrides the default setting. i.e.:FSC, SSC, CD88"/>
     <param name="g1_name" type="text" label="Label for the first set of FCS files." value="group 1"/>
     <param format="fcs" name="group1" type="data_collection" collection_type="list" label="FCS files Collection."/>
     <param name="g1_format" type="select" label="Assay type for the first set of FCS files." help="If files are compensated already, please select CyTOF.">
@@ -36,7 +36,7 @@
     <param name="g1_scaling_factor" type="integer" min="0" max="200" value="150" label="Scaling factor b for arcsinh transform for the first set of files." help="The default value is 150 for standard FCM data. The recommended value for CyTOF data is 5. If data is transformed already, please select 0.">
     </param>
     <repeat name="fcs_set" title="Set of FCS files">
-      <param name="gp_name" type="text" label="Label for the first set of FCS files." value="i.e.: group 2"/>
+      <param name="gp_name" type="text" label="Label for the first set of FCS files." help="For example: group 2"/>
       <param format="fcs" name="group" type="data_collection" collection_type="list" label="FCS files Collection."/>
       <param name="gp_format" type="select" label="Assay type for the first set of FCS files." help="If files are compensated already, please select CyTOF.">
         <option value="FCM" selected="true">Standard Flow Cytometry data</option>
