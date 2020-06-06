@@ -13,7 +13,7 @@ library(flowCore)
 library(MetaCyto)
 
 checkClusterDef <- function(cl_def){
-  if (cl_def=="" || cl_def=="None" || cl_def=="i.e.:CD3+,CD4-,CD8+,CCR7+"){
+  if (cl_def=="" || cl_def=="None"){
     quit(save = "no", status = 14, runLast = FALSE)
   } else {
     tmp <- gsub(" ", "", cl_def, fixed = TRUE)

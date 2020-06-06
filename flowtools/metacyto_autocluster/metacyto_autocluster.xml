@@ -52,9 +52,9 @@
     <conditional name="more_cluster_def">
       <param name="more_def" type="boolean" label="Add cluster definitions?" checked="false" truevalue="TRUE" falsevalue="FALSE" />
       <when value="TRUE">
-        <param name="first_def" type="text" label="Additional cluster definition:" value="i.e.:CD3+,CD4-,CD8+,CCR7+"/>
+        <param name="first_def" type="text" label="Additional cluster definition:" help="For example: CD3+,CD4-,CD8+,CCR7+"/>
         <repeat name="cl_df" title="Cluster:">
-          <param name="cluster_def" type="text" label="Additional cluster definition:" value="i.e.:CD3+,CD4-,CD8+,CCR7+"/>
+          <param name="cluster_def" type="text" label="Additional cluster definition:" help="For example: CD3+,CD4-,CD8+,CCR7+"/>
         </repeat>
       </when>
     </conditional>
