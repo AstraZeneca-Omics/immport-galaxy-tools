@@ -1,4 +1,4 @@
-<tool id="metacyto_glm_clr" name="Metadata analysis of a given cluster definition" version="1.0+galaxy0" profile="18.01>
+<tool id="metacyto_glm_clr" name="Metadata analysis of a given cluster definition" version="1.0+galaxy0" profile="18.01">
   <description>using MetaCyto's generalized linear model analysis</description>
   <requirements>
     <requirement type="package" version="1.4.0">bioconductor-metacyto</requirement>
