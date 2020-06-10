@@ -2,7 +2,7 @@ owner: azomics
 name: flowsom_cross_comp
 description: uses FlowSOM to compare individual FCS or flowframes to a SOM reference tree.
 long_description: |
-   **Note**
+    **Note**
     This was written by immport-dev-team, only uploaded to the toolshed by azomics user.
     
     **Input**
