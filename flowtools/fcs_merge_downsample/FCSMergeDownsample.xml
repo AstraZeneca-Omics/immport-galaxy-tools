@@ -57,9 +57,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool merges and downsamples multiple FCS files into one flowframe or FCS file using FlowSOM.
+Merge and downsample using FlowSOM
+------------------- 
 
------
+This tool merges and downsamples multiple FCS files into one flowframe or FCS file using FlowSOM.
 
 **Input files**
 
