@@ -1,7 +1,10 @@
-owner: iuc
+owner: azomics
 name: ggcyto_1d_density_plots
 description: generates 1D density plots for each markers in FCS file
 long_description: |
+    **Note**
+    This was written by immport-dev-team, only uploaded to the toolshed by azomics user.
+    
     **Input**
     This tool FCS files as input.
 
