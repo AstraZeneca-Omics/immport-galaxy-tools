@@ -73,9 +73,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool allows generation of density scatter plots using ggcyto.
+Scatterplots of fcs sample
+-------------------
 
------
+This tool allows generation of density scatter plots using ggcyto.
 
 **Input files**
 
