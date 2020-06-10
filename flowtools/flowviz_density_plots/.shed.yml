@@ -2,7 +2,7 @@ owner: azomics
 name: flowviz_density_plots
 description: generates stacked density plots for a set of FCS files
 long_description: |
-   **Note**
+    **Note**
     This was written by immport-dev-team, only uploaded to the toolshed by azomics user.
     
     **Input**
