@@ -114,9 +114,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool uses FlowSOM to compare individual FCS or flowframes to a SOM reference tree.
+Map fcs samples to SOM
+-------------------
 
------
+   This tool uses FlowSOM to compare individual FCS or flowframes to a SOM reference tree.
 
 **Input**
 
