@@ -115,9 +115,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool uses FlowSOM to compare two or more groups of files to a reference FlowSOM tree.
+Compare sample
+-------------------
 
------
+This tool uses FlowSOM to compare two or more groups of files to a reference FlowSOM tree.
 
 **Input**
 
