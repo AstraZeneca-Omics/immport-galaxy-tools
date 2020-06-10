@@ -147,9 +147,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool generates a reference Self-Organizing Map using FlowSOM.
-
+Generate reference SOM
 -----
+
+This tool generates a reference Self-Organizing Map using FlowSOM.
 
 **Input files**
 
