@@ -57,9 +57,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool generates stacked 1D density plots using flowViz.
+flowViz stacked 1D density plots
+-------------------
 
------
+   This tool generates stacked 1D density plots using flowViz.
 
 **Input files**
 
