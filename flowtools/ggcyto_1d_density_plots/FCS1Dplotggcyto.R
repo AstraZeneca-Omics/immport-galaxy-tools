@@ -18,7 +18,7 @@ generate1Dplot <- function(input, output, flag_pdf=FALSE, trans_method="None",
   fcsfs <- read.flowSet(input, transformation=F)
   h <- 800
   w <- 1200
-  if (length(fcsfs@colnames)>12){
+  if ("colnames" %in% names(attributes(fcsfs)) && length(fcsfs@colnames)>12){
     h <- 1200
     w <- 1600
   }
