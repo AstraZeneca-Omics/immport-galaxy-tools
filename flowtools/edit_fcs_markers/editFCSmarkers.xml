@@ -1,7 +1,8 @@
 <tool id="edit_fcs_markers" name="Edit markers or channels" version="1.0">
   <description>in FCS files</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
+    <requirement type="package" version="">bioconductor-flowcore</requirement>
   </requirements>
   <stdio>
     <exit_code range="10" level="fatal" description="Please provide a valid FCS file." />
@@ -11,7 +12,10 @@
     <exit_code range="14" level="fatal" description="Provided indices are out of range in the FCS file given as input." />
   </stdio>
   <command><![CDATA[
-	  editFCSmarkers.R '${input}' '${output_file}' '${outformat}' '${report}' '${columns}' '${colnames}' '${corm}'
+    Rscript --slave --vanilla '$__tool_directory__/editFCSmarkers.R' '${input}' '${output_file}' '${outformat}' '${report}' '${to_replace}' '${rep_with}' '${corm}'
+    #for $add in $more_replacements
+      '${add.to_rep}' '${add.replace_with}' '${add.chormkr}'
+    #end for
   ]]>
   </command>
   <inputs>
