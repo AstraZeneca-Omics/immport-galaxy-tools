@@ -1,4 +1,4 @@
-<tool id="fcs_merge_downsample" name="Merge and downsample" version="1.0">
+<tool id="fcs_merge_downsample" name="Merge and downsample" version="1.0+galaxy1">
   <description>FCS files with FlowSOM</description>
   <requirements>
     <requirement type="package" version="2.0.2">ig-flowtools</requirement>
@@ -9,7 +9,7 @@
     <exit_code range="12" level="fatal" description="There are inconsistencies in marker names between FCS files." />
   </stdio>
   <command><![CDATA[
-      FCSMergeDownsample.R '${output_file}' '${outformat}' '${factorDS}'
+       Rscript $__tool_directory__/FCSMergeDownsample.R '${output_file}' '${outformat}' '${factorDS}'
   #for $f in $input
     '${f}'
   #end for
