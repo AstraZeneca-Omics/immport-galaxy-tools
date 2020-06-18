@@ -1,0 +1,45 @@
+sudo: required
+cache: pip
+language: python
+
+python: 3.7
+
+jobs:
+  include:
+    - stage: test
+    - stage: deploy
+      if: (type = push) AND (branch = master)
+      addons: {}
+      before_install: skip
+      script:
+        - planemo --version
+        - git diff --quiet "$TRAVIS_COMMIT_RANGE" -- ; GIT_DIFF_EXIT_CODE=$?
+        - |
+          if [ "$GIT_DIFF_EXIT_CODE" -gt 1 ] ; then
+              git remote set-branches --add origin master
+              git fetch
+              TRAVIS_COMMIT_RANGE=origin/master...
+          fi
+        - echo $TRAVIS_COMMIT_RANGE
+        - |
+          planemo ci_find_repos --changed_in_commit_range "$TRAVIS_COMMIT_RANGE" \
+                                --output changed_repositories.list
+        - cat changed_repositories.list
+        - set -e
+        - |
+          if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "master" ]; then
+              while read -r DIR; do planemo shed_update --shed_target testtoolshed --shed_key "$TEST_SHED_KEY" --force_repository_creation "$DIR" || exit 1; done < changed_repositories.list
+              while read -r DIR; do
+                owner=$(grep owner: "$DIR"/.shed.yml | awk '{ print $2 }')
+                planemo shed_update --shed_target toolshed --owner $owner --shed_key "$SHED_KEY" --force_repository_creation "$DIR" || exit 1;
+              done < changed_repositories.list
+          fi
+
+before_script:
+- pip install planemo
+
+script:
+- planemo lint -r --report_level error flowtools
+
+notifications:
+  email: false

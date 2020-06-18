@@ -1,6 +1,6 @@
-owner: iuc
+owner: immport-devteam
 name: cs_overview
-description: generates an overview of the flow analysis results
+description: generates an overview of the flow analysis results.
 long_description: |
     **Input**
     Input files are tab-separated files containing counts of events in each population for each file compared to reference population patterns, MFI for each marker in each population for each file, and individual files used in the comparison. The output from a Cross Sample analysis as well as from mapping individual files to a FlowSOM reference tree are suitable files.

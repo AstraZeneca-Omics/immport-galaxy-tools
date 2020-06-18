@@ -1,4 +1,4 @@
-<tool id="cross_sample_overview" name="Generate overview information" version="1.1">
+<tool id="cross_sample_overview" name="Generate overview information" version="1.1+galaxy0">
   <description>of a multi-sample analysis.</description>
   <requirements>
     <requirement type="package" version="2.0.2">ig-flowtools</requirement>
@@ -44,7 +44,7 @@
           <element name="input3.flowclr" value="input3.flowclr"/>
         </collection>
       </param>
-      <output name="output_file" file="out.html" compare="sim_size">
+      <output name="html_file" file="out.html" compare="sim_size">
         <extra_files type="file" name="csAllMFIs.tsv" value="csAllMFIs.tsv"/>
         <extra_files type="file" name="csOverview.tsv" value="csOverview.tsv"/>
         <extra_files type="file" name="csBoxplotData.json" value="csBoxplotData.json" compare="contains"/>
