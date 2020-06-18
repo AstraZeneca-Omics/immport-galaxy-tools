@@ -9,7 +9,7 @@
     <exit_code range="12" level="fatal" description="There are inconsistencies in marker names between FCS files." />
   </stdio>
   <command><![CDATA[
-       FCSMergeDownsample.R '${output_file}' '${outformat}' '${factorDS}'
+      FCSMergeDownsample.R '${output_file}' '${outformat}' '${factorDS}'
   #for $f in $input
     '${f}'
   #end for
