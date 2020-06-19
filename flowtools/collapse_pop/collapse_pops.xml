@@ -1,4 +1,4 @@
-<tool id="collapse_populations" name="Collapse populations" version="1.0">
+<tool id="collapse_populations" name="Collapse populations" version="1.0+galaxy1">
   <description>from FLOCK or Cross Sample analysis</description>
   <requirements>
     <requirement type="package" version="0.17.1">pandas</requirement>
