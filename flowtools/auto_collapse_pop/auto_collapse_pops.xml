@@ -1,4 +1,4 @@
-<tool id="auto_collapse_populations" name="Collapse populations automatically" version="1.0">
+<tool id="auto_collapse_populations" name="Collapse populations automatically" version="1.0+galaxy1">
   <description>based on quartile binning from FLOCK results</description>
   <requirements>
     <requirement type="package" version="0.17.1">pandas</requirement>
