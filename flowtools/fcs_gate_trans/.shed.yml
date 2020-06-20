@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: fcs_gate_trans
 description: converts FCS files to text using the FCSTrans transformation, with optional automated gating.
 long_description: |

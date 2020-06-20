@@ -1,4 +1,4 @@
-<tool id="fcs_gate_trans_convert" name="Transform FCS data" version="1.2">
+<tool id="fcs_gate_trans_convert" name="Transform FCS data" version="1.2+galaxy0">
   <description>with optional compensation and automated gating with flowDensity.</description>
   <requirements>
     <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
