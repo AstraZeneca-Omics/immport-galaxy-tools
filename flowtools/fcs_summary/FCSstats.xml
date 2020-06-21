@@ -19,7 +19,7 @@
   <tests>
     <test>
       <param name="input" value="testfcs1.fcs"/>
-      <output name="output" file="summary.txt" lines_diff="8"/>
+      <output name="output" file="summary.txt" compare="sim_size"/>
     </test>
   </tests>
   <help><![CDATA[
