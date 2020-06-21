@@ -2,7 +2,6 @@
   <description>in FCS files</description>
   <requirements>
     <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
-    <requirement type="package" version="">bioconductor-flowcore</requirement>
   </requirements>
   <stdio>
     <exit_code range="10" level="fatal" description="Please provide a valid FCS file." />
@@ -12,10 +11,7 @@
     <exit_code range="14" level="fatal" description="Provided indices are out of range in the FCS file given as input." />
   </stdio>
   <command><![CDATA[
-    Rscript --slave --vanilla '$__tool_directory__/editFCSmarkers.R' '${input}' '${output_file}' '${outformat}' '${report}' '${to_replace}' '${rep_with}' '${corm}'
-    #for $add in $more_replacements
-      '${add.to_rep}' '${add.replace_with}' '${add.chormkr}'
-    #end for
+    Rscript --slave --vanilla '$__tool_directory__/editFCSmarkers.R' '${input}' '${output_file}' '${outformat}' '${report}' '${columns}' '${colnames}' '${corm}'
   ]]>
   </command>
   <inputs>
