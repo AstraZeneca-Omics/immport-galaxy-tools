@@ -62,8 +62,8 @@
       <param name="outformat" value="PNG"/>
       <param name="trans_method" value="logicle"/>
       <param name="w" value="0.4"/>
-      <param name="m" value="10000"/>
-      <param name="t" value="262144"/>
+      <param name="m" value="4.5"/>
+      <param name="t" value="10000"/>
       <output name="output" file="graph1.png" compare="sim_size"/>
     </test>
     <test>
