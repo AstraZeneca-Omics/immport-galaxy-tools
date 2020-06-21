@@ -1,4 +1,4 @@
-<tool id="ggcyto_1d_density_plots" name="Generate 1D density plots" version="1.1+galaxy1">
+<tool id="ggcyto_1d_density_plots" name="Generate 1D density plots" version="1.1+galaxy0">
   <description>for FCS file</description>
   <requirements>
     <requirement type="package" version="1.14.0">bioconductor-ggcyto</requirement>
@@ -63,7 +63,7 @@
       <param name="trans_method" value="logicle"/>
       <param name="w" value="0.4"/>
       <param name="m" value="10000"/>
-      <param name="t" value="4.5"/>
+      <param name="t" value="262144"/>
       <output name="output" file="graph1.png" compare="sim_size"/>
     </test>
     <test>
