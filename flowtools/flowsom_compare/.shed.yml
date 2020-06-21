@@ -1,4 +1,4 @@
-owner: iuc
+owner: azomics
 name: flowsom_compare
 description: uses FlowSOM to compare two or more groups of files to a reference FlowSOM tree.
 long_description: |
