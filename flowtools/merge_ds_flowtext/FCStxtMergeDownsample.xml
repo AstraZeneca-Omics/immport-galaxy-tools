@@ -1,7 +1,6 @@
 <tool id="fcstxt_merge_downsample" name="Merge and downsample" version="1.1">
   <description>txt-converted FCS files into one text file based on headers</description>
   <requirements>
-    <requirement type="package" version="1.10.2">numpy</requirement>
     <requirement type="package" version="0.17.1">pandas</requirement>
   </requirements>
   <stdio>
