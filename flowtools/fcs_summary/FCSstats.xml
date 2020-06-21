@@ -1,4 +1,4 @@
-<tool id="get_fcs_stats" name="Get summary" version="1.0">
+<tool id="get_fcs_stats" name="Get summary" version="1.0+galaxy0">
   <description>of FCS files</description>
   <requirements>
     <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
