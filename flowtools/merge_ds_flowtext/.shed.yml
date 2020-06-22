@@ -1,4 +1,4 @@
-owner: immport-devteam
+owner: iuc
 name: merge_ds_flowtext
 description: downsamples and merges multiple txt-converted FCS files into one text file
 long_description: |
