@@ -1,4 +1,4 @@
-owner: immport-devteam
+owner: azomics
 name: flowtext_summary
 description: generates a summary of a txt-converted FCS file and list of markers
 long_description: |
