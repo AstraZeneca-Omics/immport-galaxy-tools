@@ -18,8 +18,11 @@ checkCandM <- function(m_set, channels=vector(), markers=vector()){
   } else {
     in_file <- m_set[[1]] %in% markers
   }
-  yay <- if (sum(in_file)==0) F else T
-  return(yay)
+  if (sum(in_file)==0) {
+    warning("Given original columns are either not in the channels or in the markers of the read object. Will fail.")
+    return(FALSE)
+  }
+  return(TRUE)
 }
 
 modifyMarkersFCS <- function(input, output="", report="", flag_fcs=F,
@@ -44,16 +47,16 @@ modifyMarkersFCS <- function(input, output="", report="", flag_fcs=F,
       chan_to_replace <- post_channels %in% m_set[[1]]
       for (i in 1:nb){
         if (chan_to_replace[[i]]){
-          post_channels[[i]] <- m_set[[2]]
+          post_channels[[i]] <- m_set[[2]][[match(post_channels[[i]], m_set[[1]])[1]]]
         }
       }
     } else {
       marker_to_replace <- post_markers %in% m_set[[1]]
       for (i in 1:nb){
         if (marker_to_replace[[i]]){
-          post_markers[[i]] <- m_set[[2]]
+          post_markers[[i]] <- m_set[[2]][[match(post_markers[[i]], m_set[[1]])[1]]]
           pm <- paste("$P", as.character(i), "S", sep="")
-          fcs@description[[pm]] <- m_set[[2]]          
+          fcs@description[[pm]] <- post_markers[[i]]
         }
       }
     }
@@ -117,8 +120,8 @@ for (i in seq(1, length(items), 3)) {
   }
 
   old_names <- strsplit(items[i], ",")[[1]]
-  to_replace <- sapply(old_names, function(x) trimws(x))
-  replacement <- trimws(items[i+1])
+  to_replace <- sapply(old_names, trimws)
+  replacement <- sapply(strsplit(items[i+1], ",")[[1]], trimws)
   flag_channel <- if (items[i+2]=="C") TRUE else FALSE
   m_set <- list(to_replace, replacement, flag_channel)
   marker_sets[[j]] <- m_set
