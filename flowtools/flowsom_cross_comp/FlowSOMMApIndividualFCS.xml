@@ -97,9 +97,9 @@
       <output name="mfistats" file="out2.flowstat2" compare="sim_size"/>
       <output name="allstats" file="out2.flowstat3" compare="sim_size"/>
       <output_collection name="output" type="list" count="3">
-        <element name="input1.flowclr" file="run2/input1.flowclr" compare="sim_size"/>
-        <element name="input2.flowclr" file="run2/input2.flowclr" compare="sim_size"/>
-        <element name="input3.flowclr" file="run2/input3.flowclr" compare="sim_size"/>
+        <element name="input1.fcs_clustered.flowclr" file="run2/input1.flowclr" compare="sim_size"/>
+        <element name="input2.fcs_clustered.flowclr" file="run2/input2.flowclr" compare="sim_size"/>
+        <element name="input3.fcs_clustered.flowclr" file="run2/input3.flowclr" compare="sim_size"/>
       </output_collection>
       <output_collection name="trees" type="list" count="3">
         <element name="input1.png" file="run2/input1.png" compare="sim_size"/>
@@ -107,9 +107,9 @@
         <element name="input3.png" file="run2/input3.png" compare="sim_size"/>
       </output_collection>
       <output_collection name="mtrees" type="list" count="3">
-        <element name="input1.pdf" file="run2/input1.pdf" compare="sim_size" delta="100000"/>
-        <element name="input2.pdf" file="run2/input2.pdf" compare="sim_size" delta="100000"/>
-        <element name="input3.pdf" file="run2/input3.pdf" compare="sim_size" delta="100000"/>
+        <element name="input1.fcs_marker_plots.pdf" file="run2/input1.pdf" compare="sim_size" delta="100000"/>
+        <element name="input2.fcs_marker_plots.pdf" file="run2/input2.pdf" compare="sim_size" delta="100000"/>
+        <element name="input3.fcs_marker_plots.pdf" file="run2/input3.pdf" compare="sim_size" delta="100000"/>
       </output_collection>
     </test>
   </tests>
