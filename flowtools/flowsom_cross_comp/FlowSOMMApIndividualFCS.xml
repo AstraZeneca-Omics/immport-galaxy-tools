@@ -102,9 +102,9 @@
         <element name="input3.fcs_clustered.flowclr" file="run2/input3.flowclr" compare="sim_size"/>
       </output_collection>
       <output_collection name="trees" type="list" count="3">
-        <element name="input1.png" file="run2/input1.png" compare="sim_size"/>
-        <element name="input2.png" file="run2/input2.png" compare="sim_size"/>
-        <element name="input3.png" file="run2/input3.png" compare="sim_size"/>
+        <element name="input1.fcs_tree.png" file="run2/input1.png" compare="sim_size"/>
+        <element name="input2.fcs_tree.png" file="run2/input2.png" compare="sim_size"/>
+        <element name="input3.fcs_tree.png" file="run2/input3.png" compare="sim_size"/>
       </output_collection>
       <output_collection name="mtrees" type="list" count="3">
         <element name="input1.fcs_marker_plots.pdf" file="run2/input1.pdf" compare="sim_size" delta="100000"/>
