@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: cross_sample
 description: runs CrossSample using the MFI from FLOCK and text-converted FCS files
 long_description: |
