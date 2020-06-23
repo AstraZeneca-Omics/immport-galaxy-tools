@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: profile_cl
 description: uses flowCL to find a match for each of the populations defined by FLOCK
 long_description: |
