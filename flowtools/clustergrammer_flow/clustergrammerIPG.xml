@@ -1,7 +1,12 @@
-<tool id="clustergrammer_flow" name="Generate a heat map" version="1.0">
+<tool id="clustergrammer_flow" name="Generate a heat map" version="1.0+galaxy1">
   <description>of a flow analysis using Clustergrammer</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="2.8">jinja2</requirement>
+    <requirement type="package" version="1.13.5">clustergrammer</requirement>
+    <requirement type="package" version="1.9.2">numpy</requirement>
+    <requirement type="package" version="0.17.0">scipy</requirement>
+    <requirement type="package" version="0.18.0">pandas</requirement>
+    <requirement type="package" version="0.19.0">scikit-learn</requirement>
   </requirements>
   <stdio>
     <exit_code range="2" level="fatal" description="Please provide a comma-separated list of indices." />
@@ -10,13 +15,7 @@
     <exit_code range="5" level="fatal" description="Please provide indices within the range of your input matrix." />
   </stdio>
   <command><![CDATA[
-      mkdir templates &&
-      mkdir -p static/flowtools &&
-      FLOWTOOL='which clustergrammerIPG.py' &&
-      FLOWTOOLDIR=\$(dirname $FLOWTOOL) &&
-      cp $FLOWTOOLDIR/../share/templates/clus* templates/ &&
-      cp -r $FLOWTOOLDIR/../share/static/flowtools/* static/flowtools/ &&
-      clustergrammerIPG.py' '${input_matrix}' '${html_file}' '${html_file.files_path}' 'templates/'
+      python '$__tool_directory__/clustergrammerIPG.py' '${input_matrix}' '${html_file}' '${html_file.files_path}' 'templates/'
       #for $category in $cat
         'new_cat'
         '${category.roc}'
