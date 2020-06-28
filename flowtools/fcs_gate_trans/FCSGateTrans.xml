@@ -109,8 +109,8 @@
       <param name="outformat" value="flowtext"/>
       <param name="trans_method" value="logicle"/>
       <param name="w" value="0.4"/>
-      <param name="m" value="10000"/>
-      <param name="t" value="4.5"/>
+      <param name="t" value="10000"/>
+      <param name="m" value="4.5"/>
       <output name="output" file="logicle.flowtext"/>
     </test>
     <test>
