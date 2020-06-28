@@ -89,7 +89,7 @@
     <test>
       <param name="input" value="testfcs1.fcs"/>
       <param name="comp" value="TRUE"/>
-      <param name="gate" value="FALSE"/>
+      <param name="gate" value="TRUE"/>
       <param name="outformat" value="flowtext"/>
       <param name="trans_method" value="fcstrans"/>
       <output name="output" file="withcomp.flowtext"/>
