@@ -8,7 +8,13 @@
     <exit_code range="2:" level="fatal" description="See stderr for more details." />
   </stdio>
   <command><![CDATA[
-    Rscript $__tool_directory__/FCSGateTrans.R '${input}' '${output}' $comp '${outformat}' '${graph}' '${report}' '${transform.trans_method}'
+    Rscript $__tool_directory__/FCSGateTrans.R '${input}' '${output}' $comp '${outformat}'
+    #if $gate
+          '${graph}' '${report}'
+    #else
+          'None' 'None'
+    #end if
+      '${transform.trans_method}'
       #if $transform.trans_method == "arcsinh"
         $transform.scaling_factor
       #else if $transform.trans_method == "logicle"
