@@ -1,6 +1,7 @@
 <tool id="fcs_gate_trans_convert" name="Transform FCS data" version="1.2+galaxy0">
   <description>with optional compensation and automated gating with flowDensity.</description>
   <requirements>
+    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
     <requirement type="package" version="1.10.0">bioconductor-flowdensity</requirement>
   </requirements>
   <stdio>
@@ -39,10 +40,6 @@
         </param>
       </when>
     </conditional>
-    <param name="gate" type="select" label="Automatically gate debris?">
-      <option value="FALSE">No, thank you</option>
-      <option value="TRUE">Yes, please</option>
-    </param>
     <param name="gate" type="boolean" checked="false" truevalue="TRUE" falsevalue="FALSE" label="Automatically gate debris?"/>
     <param name="outformat" type="select" label="Output Format">
       <option value="flowtext">Text File</option>
@@ -67,6 +64,68 @@
   <tests>
     <test>
       <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="FALSE"/>
+      <param name="gate" value="FALSE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="fcstrans"/>
+      <output name="output" file="nocomp.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="FALSE"/>
+      <param name="gate" value="FALSE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="None"/>
+      <output name="output" file="notrans.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="FALSE"/>
+      <param name="gate" value="FALSE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="arcsinh"/>
+      <param name="scaling_factor" value="150"/>
+      <output name="output" file="arcsinh150.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="TRUE"/>
+      <param name="gate" value="FALSE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="fcstrans"/>
+      <output name="output" file="withcomp.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="TRUE"/>
+      <param name="gate" value="FALSE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="logicle_auto"/>
+      <output name="output" file="log_auto.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="TRUE"/>
+      <param name="gate" value="FALSE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="logicle"/>
+      <param name="w" value="0.4"/>
+      <param name="m" value="10000"/>
+      <param name="t" value="4.5"/>
+      <output name="output" file="logicle.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
+      <param name="comp" value="TRUE"/>
+      <param name="gate" value="TRUE"/>
+      <param name="outformat" value="flowtext"/>
+      <param name="trans_method" value="fcstrans"/>
+      <output name="output" file="withcomp.flowtext"/>
+      <output name="graph" file="graph.png" compare="sim_size"/>
+      <output name="report" file="report.txt"/>
+    </test>
+    <test>
+      <param name="input" value="testfcs1.fcs"/>
       <param name="comp" value="TRUE"/>
       <param name="gate" value="FALSE"/>
       <param name="outformat" value="FCS"/>
@@ -89,16 +148,15 @@
 
 **Input files**
 
-This tool uses FCS files as input and files are processed serially. Users choose to automatically gate cellular debris, and/or compensate the data.
+This tool uses FCS files as input and files are processed serially. Users choose which transformation algorithm to apply, and whether to automatically gate cellular debris, and/or compensate the data.
 
 **Output files**
 
-Output is tab-separated text containing transformed fluorescence intensity values for each marker.
-If the option is selected, a FCS file (format FCS3.0) is generated.
+Output is a table of fluorescence intensity values for each marker, as a text file, FCS3.0 or R Object (flowFrame).
 
 **Gating output**
 
-Automatically gated output includes a summary of data pre- and post-gating as well as density scatter plots pre- and post- gating for each marker pair.
+Automatically gated output includes a summary of data pre- and post-gating as well as density scatter plots pre- and post- gating for each marker pair. Please check to make sure the gating is doing what you think it should be doing.
 
 -----
 
