@@ -1,15 +1,17 @@
-<tool id="flowsom_tree" name="Generate a reference Self Organizing Map" version="1.0+galaxy1">
+<tool id="flowsom_tree" name="Generate a reference Self Organizing Map" version="1.0+galaxy1" profile="18.01">
   <description>using FlowSOM.</description>
   <requirements>
     <requirement type="package" version="1.18.0">bioconductor-flowsom</requirement>
   </requirements>
   <stdio>
+    <exit_code range="1:9" level="fatal" description="See stderr for more details." />
     <exit_code range="10" level="fatal" description="Please provide a valid input (FCS or flowFrame)." />
     <exit_code range="11" level="fatal" description="Please provide integers for columns you want to analyze, in a comma separated list." />
     <exit_code range="12" level="fatal" description="Provided indices are out of range in the FCS file / flowframe given as input." />
     <exit_code range="13" level="fatal" description="Please provide integers for the number of expected clusters." />
     <exit_code range="14" level="fatal" description="Please provide integers for the grid size." />
     <exit_code range="15" level="fatal" description="Please provide an integer to set the seed." />
+    <exit_code range="16:" level="fatal" description="See stderr for more details." />
   </stdio>
   <command><![CDATA[
       Rscript $__tool_directory__/FlowSOMGenerateTree.R '${input}' '${output}' '${cols}' '${cluster}' '${xdim}' '${ydim}' '${seed}'
