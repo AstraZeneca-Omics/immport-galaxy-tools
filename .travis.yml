@@ -53,7 +53,7 @@ script:
   done < changed_repositories.list
 - |
   while read -r DIR; do
-    planemo test --no_cache_galaxy --galaxy_python_version 3.7 "$DIR"
+    planemo test --galaxy_python_version 3.7 "$DIR"
   done < changed_repositories.list
 notifications:
   email: false
