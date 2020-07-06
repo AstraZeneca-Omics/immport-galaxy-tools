@@ -50,8 +50,9 @@ script:
 - |
   while read -r DIR; do
     planemo lint -r --report_level error "$DIR"
-    planemo test "$DIR"
   done < changed_repositories.list
-
+  while read -r DIR; do
+    planemo test --no_cache_galaxy --galaxy_branch release_20.01 "$DIR"
+  done < changed_repositories.list
 notifications:
   email: false
