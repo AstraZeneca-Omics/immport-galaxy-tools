@@ -7,7 +7,7 @@
     <exit_code range="1:" />
   </stdio>
   <command><![CDATA[
-    txtdiagnosis.py -i '${input}' -o '${output}' -n '${input.name}'
+    python '$__tool_directory__/txtdiagnosis.py' -i '${input}' -o '${output}' -n '${input.name}'
   ]]>
   </command>
   <inputs>
