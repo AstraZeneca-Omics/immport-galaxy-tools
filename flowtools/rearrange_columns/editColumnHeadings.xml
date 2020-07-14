@@ -1,4 +1,4 @@
-<tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2">
+<tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2+galaxy0" profile="18.01">
   <description>in txt-converted FCS files</description>
   <stdio>
     <exit_code range="1" level="fatal" description="Please pick something for the tool to do =)" />
