@@ -13,6 +13,7 @@
 
 library(ggplot2)
 library(grid)
+library(KernSmooth)
 # Multiple plot function
 # from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_%28ggplot2%29/
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
