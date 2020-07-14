@@ -1,4 +1,4 @@
-<tool id="run_flock" name="Run FLOCK" version="1.2+galaxy0">
+<tool id="run_flock" name="Run FLOCK" version="1.2+galaxy0" profile="18.01">>
   <description>using a FCS file that was converted/transformed to a text file</description>
   <requirements>
     <requirement type="package" version="0.16.0">scipy</requirement>
