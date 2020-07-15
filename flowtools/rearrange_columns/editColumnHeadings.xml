@@ -1,14 +1,18 @@
-<tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2+galaxy0" profile="18.01">
+<tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2.0+galaxy0" profile="18.01">
   <description>in txt-converted FCS files</description>
+  <requirements>
+    <requirement type="package" version="3.8.3">python</requirement>
+  </requirements>
   <stdio>
     <exit_code range="1" level="fatal" description="Please pick something for the tool to do =)" />
-    <exit_code range="2 level="fatal" description="Please provide column headers to replace." />
+    <exit_code range="2" level="fatal" description="Please provide column headers to replace." />
     <exit_code range="3" level="fatal" description="Please provide column headers to use as replacement." />
     <exit_code range="4" level="fatal" description="Column headers provided were not found in the input file." />
     <exit_code range="5" level="fatal" description="More headers provided than columns in the input file." />
     <exit_code range="6" level="fatal" description="New column headings and column headings must be provided together." />
     <exit_code range="7" level="fatal" description="Please provide a new column order or subset." />
     <exit_code range="8" level="fatal" description="Columns provided for subsetting/re-ordering are not in the input file" />
+    <exit_code range="9:" level="fatal"/>
   </stdio>
   <command><![CDATA[
 	  python '$__tool_directory__/editColumnHeadings.py' -o '${output_file}' -i '${input}'
