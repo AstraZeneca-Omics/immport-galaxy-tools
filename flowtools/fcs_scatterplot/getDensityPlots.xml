@@ -9,7 +9,7 @@
     <exit_code range="12" level="fatal" description="Please provide more than one channel to plot" />
   </stdio>
   <command><![CDATA[
-      Rscript --slave --vanilla '$__tool_directory__/getDensityPlots.R' '${input}' '${channels}' '${output}' $outformat
+      Rscript --slave --vanilla '$__tool_directory__/getDensityPlots.R' '${input}' '${channels}' '${output}' '${outformat}'
   ]]>
   </command>
   <inputs>
