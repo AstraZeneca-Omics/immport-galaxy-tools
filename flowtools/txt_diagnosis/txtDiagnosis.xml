@@ -21,7 +21,7 @@
       <param name="input" value="input_error.txt"/>
       <output name="output" file="output_error.txt">
         <assert_contents>
-          <has_text_matching text="WARNING: line 6 in .* contains non-numeric results"/>
+          <has_text_matching expression="WARNING: line 6 in .* contains non-numeric results"/>
         </assert_contents>
       </output>
     </test>
