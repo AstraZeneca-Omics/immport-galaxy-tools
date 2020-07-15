@@ -32,7 +32,7 @@
     <conditional name="rename">
       <param name="nn" type="boolean" label="Edit column headings?" help="By default, column headings are not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
       </param>
-      <when value="True">
+      <when value="TRUE">
         <repeat name="more_replacements" title="Column to edit">
           <param name="to_rep" type="text" label="Column headings to replace:" value="i.e.:TLR 6, TLR6PE" help="Please indicate which column heading to replace. If there are more than one heading to replace with the SAME replacement, enter a comma-separated list. See below for examples."/>
           <param name="replace_with" type="text" label="Replace with:" value="i.e.:TLR6" help="Please indicate what to use for replacement." />
@@ -43,7 +43,7 @@
     <conditional name="reorder">
       <param name="order_col" type="boolean" label="Re-order or select column?" help="By default, column order is not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
       </param>
-      <when value="True">
+      <when value="TRUE">
         <param name="order" type="text" label="New order:" value="i.e.:1,2,5 or CD3,CD4,CCR3" help="Please indicate columns to keep in the order they should be in. If subsetting/re-ordering and renaming columns, indicate new column headings or numerical order."/>
       </when>
     </conditional>
