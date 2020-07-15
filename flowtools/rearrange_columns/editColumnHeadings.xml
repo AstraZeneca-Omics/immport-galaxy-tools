@@ -44,7 +44,7 @@
       <param name="order_col" type="boolean" label="Re-order or select column?" help="By default, column order is not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
       </param>
       <when value="TRUE">
-        <param name="order" type="text" label="New order:" value="i.e.:1,2,5 or CD3,CD4,CCR3" help="Please indicate columns to keep in the order they should be in. If subsetting/re-ordering and renaming columns, indicate new column headings or numerical order."/>
+        <param name="order" type="text" label="New order:" value="i.e.:1,2,5 or CD3,CD4,CCR3" help="Please indicate columns to keep in the order they should be in. This operation happens after renaming. If subsetting/re-ordering and renaming columns, indicate new column heading names or numerical order."/>
       </when>
     </conditional>
   </inputs>
@@ -56,12 +56,24 @@
       <param name="input" value="input1.txt"/>
       <conditional name="reorder">
         <param name="order_col" value="True"/>
-        <param name="order" value="CD4,CCR3,CD8,CCR4"/>
+        <param name="order" value="CD4,CCR3,CD8,CCR7"/>
       </conditional>
       <conditional name="rename">
         <param name="nn" value="True"/>
         <repeat name="more_replacements">
-          <param name="to_rep" value="CCR4"/>
+          <param name="to_rep" value="FITC CD4"/>
+          <param name="replace_with" value="CD4"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PE CCR3"/>
+          <param name="replace_with" value="CCR3"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PP CD8"/>
+          <param name="replace_with" value="CD8"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="APC CCR4"/>
           <param name="replace_with" value="CCR7"/>
         </repeat>
       </conditional>
@@ -71,9 +83,9 @@
       <param name="input" value="input2.txt"/>
       <conditional name="reorder">
         <param name="order_col" value="True"/>
-        <param name="order" value="Side Scatter,FITC,CD4,APC,Forward Scatter"/>
+        <param name="order" value="Side Scatter,FITC CD4,APC CCR5,Forward Scatter"/>
       </conditional>
-      <output name="output_file" value="output1.flowtext"/>
+      <output name="output_file" value="output2.flowtext"/>
     </test>
   </tests>
   <help><![CDATA[
