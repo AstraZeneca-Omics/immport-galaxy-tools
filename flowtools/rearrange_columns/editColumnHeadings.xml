@@ -1,7 +1,7 @@
 <tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2.0+galaxy0" profile="18.01">
   <description>in txt-converted FCS files</description>
   <requirements>
-    <requirement type="package" version="3.8.3">python</requirement>
+    <requirement type="package" version="0.17.1">pandas</requirement>
   </requirements>
   <stdio>
     <exit_code range="1" level="fatal" description="Please pick something for the tool to do =)" />
@@ -16,12 +16,12 @@
   </stdio>
   <command><![CDATA[
 	  python '$__tool_directory__/editColumnHeadings.py' -o '${output_file}' -i '${input}'
-  #if $rename.nn=="TRUE"
-    #for $add in $rename.more_replacements
+  #if $rename.nn:
+    #for $add in $rename.more_replacements:
       -r '${add.to_rep}' -w '${add.replace_with}'
     #end for
   #end if
-  #if $reorder.order_col=="TRUE"
+  #if $reorder.order_col:
     -n '${reorder.order}'
   #end if
   ]]>
@@ -32,7 +32,7 @@
     <conditional name="rename">
       <param name="nn" type="boolean" label="Edit column headings?" help="By default, column headings are not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
       </param>
-      <when value="TRUE">
+      <when value="True">
         <repeat name="more_replacements" title="Column to edit">
           <param name="to_rep" type="text" label="Column headings to replace:" value="i.e.:TLR 6, TLR6PE" help="Please indicate which column heading to replace. If there are more than one heading to replace with the SAME replacement, enter a comma-separated list. See below for examples."/>
           <param name="replace_with" type="text" label="Replace with:" value="i.e.:TLR6" help="Please indicate what to use for replacement." />
@@ -43,14 +43,39 @@
     <conditional name="reorder">
       <param name="order_col" type="boolean" label="Re-order or select column?" help="By default, column order is not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
       </param>
-      <when value="TRUE">
+      <when value="True">
         <param name="order" type="text" label="New order:" value="i.e.:1,2,5 or CD3,CD4,CCR3" help="Please indicate columns to keep in the order they should be in. If subsetting/re-ordering and renaming columns, indicate new column headings or numerical order."/>
       </when>
     </conditional>
   </inputs>
   <outputs>
-    <data format="flowtext" name="output_file" label="Rearranged ${input.name}"/>
+    <data format="flowtext" name="output_file" label="Rearranged ${input.name} on ${on_string}"/>
   </outputs>
+  <tests>
+    <test>
+      <param name="input" value="input1.txt"/>
+      <conditional name="reorder">
+        <param name="order_col" value="True"/>
+        <param name="order" value="CD4,CCR3,CD8,CCR4"/>
+      </conditional>
+      <conditional name="rename">
+        <param name="nn" value="True"/>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="CCR4"/>
+          <param name="replace_with" value="CCR7"/>
+        </repeat>
+      </conditional>
+      <output name="output_file" value="output1.flowtext"/>
+    </test>
+    <test>
+      <param name="input" value="input2.txt"/>
+      <conditional name="reorder">
+        <param name="order_col" value="True"/>
+        <param name="order" value="Side Scatter,FITC,CD4,APC,Forward Scatter"/>
+      </conditional>
+      <output name="output_file" value="output1.flowtext"/>
+    </test>
+  </tests>
   <help><![CDATA[
    This tool enables the removal, rearrangement and/or renaming of text file columns.
 -----
