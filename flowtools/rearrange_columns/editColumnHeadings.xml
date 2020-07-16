@@ -87,6 +87,37 @@
       </conditional>
       <output name="output_file" value="output2.flowtext"/>
     </test>
+    <test>
+      <param name="input" value="input3.txt"/>
+      <conditional name="rename">
+        <param name="nn" value="True"/>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="Forward Scatter"/>
+          <param name="replace_with" value="M1"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="Side Scatter"/>
+          <param name="replace_with" value="M2"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="FITC CD4"/>
+          <param name="replace_with" value="M3"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PE CD25"/>
+          <param name="replace_with" value="M4"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PP CD3"/>
+          <param name="replace_with" value="M5"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="APC CD45RA"/>
+          <param name="replace_with" value="M6"/>
+        </repeat>
+      </conditional>
+      <output name="output_file" value="output3.flowtext"/>
+    </test>
   </tests>
   <help><![CDATA[
    This tool enables the removal, rearrangement and/or renaming of text file columns.
