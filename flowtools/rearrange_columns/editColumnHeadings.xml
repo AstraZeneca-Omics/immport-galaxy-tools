@@ -1,7 +1,7 @@
 <tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2.0+galaxy0" profile="18.01">
   <description>in txt-converted FCS files</description>
   <requirements>
-    <requirement type="package" version="0.17.1">pandas</requirement>
+    <requirement type="package" version="1.0.5">pandas</requirement>
   </requirements>
   <stdio>
     <exit_code range="1" level="fatal" description="Please pick something for the tool to do =)" />
@@ -15,8 +15,6 @@
     <exit_code range="9:" level="fatal"/>
   </stdio>
   <command><![CDATA[
-    which python3 &&
-    which python &&
 	  python3 '$__tool_directory__/editColumnHeadings.py' -o '${output_file}' -i '${input}'
   #if $rename.nn:
     #for $add in $rename.more_replacements:
