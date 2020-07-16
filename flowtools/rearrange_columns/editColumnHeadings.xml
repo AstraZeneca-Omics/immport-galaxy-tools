@@ -15,6 +15,8 @@
     <exit_code range="9:" level="fatal"/>
   </stdio>
   <command><![CDATA[
+    which python3 &&
+    which python &&
 	  python3 '$__tool_directory__/editColumnHeadings.py' -o '${output_file}' -i '${input}'
   #if $rename.nn:
     #for $add in $rename.more_replacements:
