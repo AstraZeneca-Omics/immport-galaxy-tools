@@ -42,8 +42,16 @@ def rearrange_file(input_file, output_file, new_cols, new_order, flag_text):
             sys.exit(6)
         subset = []
         if flag_text:
-            check_subset = sum([False if x in df.columns else True for x in new_order])
-            if check_subset > 0:
+            existing_cols = list(df.columns)
+            unknown_elements = list(set(new_order) - set(existing_cols))
+            if len(unknown_elements):
+                print("%s of the provided columns for reorder is/are not in the input file." % len(unknown_elements), file=sys.stderr)
+                print("Existing columns:", file=sys.stderr)
+                for col in existing_cols:
+                    print(col, file=sys.stderr)
+                print("Provided columns for new order which are not in the original list:", file=sys.stderr)
+                for col in unknown_elements:
+                    print(col, file=sys.stderr)
                 sys.exit(9)
             subset = new_order
         else:
