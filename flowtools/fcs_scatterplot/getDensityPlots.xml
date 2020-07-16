@@ -4,9 +4,11 @@
     <requirement type="package" version="1.10.0">bioconductor-flowdensity</requirement>
   </requirements>
   <stdio>
+    <exit_code range="1:9" level="fatal" />
     <exit_code range="10" level="fatal" description="Please provide a comma separated list of channels to plot" />
     <exit_code range="11" level="fatal" description="Please provide numeric values for the list of channels to plot" />
     <exit_code range="12" level="fatal" description="Please provide more than one channel to plot" />
+    <exit_code range="13:" level="fatal" />
   </stdio>
   <command><![CDATA[
       Rscript --slave --vanilla '$__tool_directory__/getDensityPlots.R' '${input}' '${channels}' '${output}' '${outformat}'
