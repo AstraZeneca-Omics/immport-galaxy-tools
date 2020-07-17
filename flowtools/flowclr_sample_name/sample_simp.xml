@@ -1,0 +1,94 @@
+<tool id="flclr_sample_name" name="Add sample information" version="1.0+galaxy1", profile="18.01">
+  <description>to flow clustered text file collection.</description>
+  <requirements>
+    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
+  </requirements>
+  <stdio>
+    <exit_code range="2:" level="fatal" description="See stderr for more details." />
+  </stdio>
+  <command><![CDATA[
+    Rscript '$__tool_directory__/sample_simp.R' '${input}' '${output}' '${samp_names}'  
+  ]]>
+  </command>
+  <inputs>      
+    <param format="flowclr" name="input" type="data_collection" collection_type="list" label="Clustered flowtext file collection"/>	
+    <param name="samp_names" type="text" value="ie..: sample1, sample2, sample3" label="Sample names" help="Supply the sample names of each flowtext file in order of the flowtext files in the data collection. Please see below for more information on formatting."/> 
+  </inputs>
+  <outputs>
+    <data format="flowtext" name="output" label="Sample ${input.name}"/>
+  </outputs>
+  <!--<tests>
+    <test>
+      <param name="input">
+	<collection type="list">
+          <element name="input1.flowclr" value"input1.flowclr"/>
+          <element name="input2.flowclr" value="input2.flowcl"/>	
+        </collection> 
+      </param>	
+      <param name="samp_names" value="Sample1, Sample2"/>
+      <output name="output" file="output.flowtext"/>
+    </test>
+  </tests>
+-->
+  <help><![CDATA[
+   This tool adds a column to flowtext or flowclustered file with the sample information. 
+
+-----
+
+**Input files**
+
+This tool requires valid flowtext files as input. Files are processed serially. 
+
+If inputing sample names manually then the sample names must be in order of the flowtext files in the dataset collection.
+
+If using the flowtext file names as the sample names then you can choose to keep the whole flowtext file name as sample name or the names can be abbreviated removing any letters after the fullstop.
+Alternatively flowtext file names can be manually changed prior to running this tool. 
+
+**Output file**
+
+The output is a flowtext file collection with each flowtext file containing the the sample information.
+
+-----
+
+**Example**::
+
+
+**Input**::
+
+File 1
+   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...
+   449     157     551     129     169     292     ...
+   894     1023	   199     277     320     227     ...
+   262     73      437     69      0       146     ...
+   340     115     509     268     0       74      ...
+   ...     ...     ...     ...     ...     ...     ...
+File 2
+   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...
+   449     157     551     129     169     292     ...
+   894     1023    199     277     320     227     ...
+   262     73      437     69      0       146     ...
+   340     115     509     268     0       74      ...
+   ...     ...     ...     ...     ...     ...     ...
+  
+**Output**::
+
+File 1
+   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...  sample
+   449     157     551     129     169     292     ...    1
+   894     1023    199     277     320     227     ...    1
+   262     73      437     69      0       146     ...    1
+   340     115     509     268     0       74      ...    1
+   ...     ...     ...     ...     ...     ...     ...    1
+   
+File 2
+   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...  sample
+   449     157     551     129     169     292     ...    2
+   894     1023    199     277     320     227     ...    2
+   262     73      437     69      0       146     ...    2
+   340     115     509     268     0       74      ...    2
+   ...     ...     ...     ...     ...     ...     ...    2
+
+   
+ ]]>
+  </help>
+</tool>
