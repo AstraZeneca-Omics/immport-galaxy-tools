@@ -15,7 +15,6 @@
 #-------------#
 
 
-library(flowCore)    
 
 sample_name <- function(input_file, sample_names){
 	flowtext <- list()
@@ -42,6 +41,5 @@ sample_name <- function(input_file, sample_names){
 args <- commandArgs(trailingOnly = TRUE)
 
 sample_name(args[1], args[3])
-
 
 
