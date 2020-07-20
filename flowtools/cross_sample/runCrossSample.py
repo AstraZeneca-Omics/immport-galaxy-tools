@@ -3,7 +3,6 @@
 #                  Copyright (c) 2016 Northrop Grumman.
 #                          All rights reserved.
 ######################################################################
-from __future__ import print_function
 import sys
 import os
 from scipy.stats import gmean
@@ -94,7 +93,7 @@ def get_pop_prop(input_files, summary_stat, mfi_stats, marker_names, mfi_calc):
 
 
 def run_cross_sample(input_files, f_names, mfi_file, output_dir, summary_stat,
-                     mfi_stats, tool_directory, mfi_calc):
+                     mfi_stats, mfi_calc):
     markers = ""
     # Strip off Header Line
     with open(mfi_file, "r") as mfi_in, open("mfi.txt", "w") as mfi_out:
@@ -109,11 +108,11 @@ def run_cross_sample(input_files, f_names, mfi_file, output_dir, summary_stat,
     outputs = {}
     # Run cent_adjust
     for nm, flow_file in enumerate(input_files):
-        run_command = tool_directory + "/bin/cent_adjust mfi.txt " + flow_file
+        run_command = "cent_adjust mfi.txt " + flow_file
         print(run_command)
         os.system(run_command)
         flow_name = os.path.split(flow_file)[1]
-        outfile = os.path.join(output_dir, flow_name + ".flowclr")
+        outfile = os.path.join(output_dir, f_names[nm] + ".flowclr")
         outputs[outfile] = f_names[nm]
         with open(flow_file, "r") as flowf, open("population_id.txt", "r") as popf, open(outfile, "w") as outf:
             f_line = flowf.readline()
@@ -203,12 +202,6 @@ if __name__ == "__main__":
             help="File location for the MFI summary statistics.")
 
     parser.add_argument(
-            '-t',
-            dest="tool_dir",
-            required=True,
-            help="File location for cent_adjust.")
-
-    parser.add_argument(
             '-a',
             dest="all_stats",
             required=True,
@@ -219,5 +212,5 @@ if __name__ == "__main__":
     input_files = [f for f in args.input_files]
     input_names = [n for n in args.filenames]
     compare_MFIs(input_files, input_names, args.mfi)
-    run_cross_sample(input_files, input_names, args.mfi, args.out_path, args.sstat, args.mfi_stat, args.tool_dir, args.mfi_calc)
+    run_cross_sample(input_files, input_names, args.mfi, args.out_path, args.sstat, args.mfi_stat, args.mfi_calc)
     generate_CS_stats(args.mfi_stat, args.all_stats)
