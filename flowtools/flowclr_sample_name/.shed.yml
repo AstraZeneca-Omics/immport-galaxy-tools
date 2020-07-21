@@ -1,0 +1,13 @@
+owner: azomics
+name: flclr_sample_name
+description: Add sample information and merge a flow clustered or tabular text file collection.
+long_description: |
+    **Input**
+    A collection of tabular or flowclr text files.
+
+    **Output**
+    A merged flowclr file with an additional column indicating provenance of each row.
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/azomics/immport-galaxy-tools/tree/master/flowtools/flowclr_sample_name
+type: unrestricted

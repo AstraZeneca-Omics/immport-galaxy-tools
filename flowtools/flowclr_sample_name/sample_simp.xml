@@ -1,48 +1,63 @@
-<tool id="flclr_sample_name" name="Add sample information" version="1.0+galaxy1", profile="18.01">
-  <description>to flow clustered text file collection.</description>
+<tool id="flclr_sample_name" name="Add sample information and merge" version="1.0+galaxy1" profile="18.01">
+  <description>a flow clustered or tabular text file collection.</description>
   <requirements>
-    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
+     <requirement type="package" version="4.4">sed</requirement>
   </requirements>
   <stdio>
     <exit_code range="1:" level="fatal" description="See stderr for more details." />
   </stdio>
   <command><![CDATA[
-    Rscript '$__tool_directory__/sample_simp.R' '${input}' '${output}' '${samp_names}'  
+    #set $first = $inputs[0]
+    head -n 1 '$first' | sed "s/\$/\t$header/" > '$output';
+
+    #if $sample_names
+    #set $identifiers = [ x.strip() for x in $sample_names.split(",") ]
+    #else
+    #set $identifiers = [ i.element_identifier for i in $inputs ]
+    #end if
+
+    #if len($identifiers) != len($inputs)
+    #  echo "Error, number of file identifiers/samples doesn't match the number of files.";
+    #  exit(1)
+    #end if
+
+    #for $i, $input in enumerate($inputs)
+      tail -n +2 '$input' | sed "s/\$/\t$identifiers[$i]/" >> '$output';
+    #end for#
   ]]>
   </command>
-  <inputs>      
-    <param format="flowclr" name="input" type="data_collection" collection_type="list" label="Clustered flowtext file collection"/>	
-    <param name="samp_names" type="text" value="ie..: sample1, sample2, sample3" label="Sample names" help="Supply the sample names of each flowtext file in order of the flowtext files in the data collection. Please see below for more information on formatting."/> 
+  <inputs>
+    <param name="inputs" format="flowclr,tabular" type="data" multiple="true" min="2" label="Clustered flowtext or tabular file collection"/>
+    <param name="sample_names" type="text" label="Sample names" optional="true" help="Supply the sample names of each flowtext file in order of the flowtext files in the data collection, comma separated, to override the collection identifier. Please see below for more information on formatting."/>
+    <param name="header" type="text" value="Sample" optional="true" label="Column name for identifier" help="Sample by default, names the new column added with the identifier for each file."/>
   </inputs>
   <outputs>
-    <data format="flowtext" name="output" label="Sample ${input.name}"/>
+    <data format="flowtext" name="output" label="Merged output"/>
   </outputs>
-  <!--<tests>
+  <tests>
     <test>
-      <param name="input">
-	<collection type="list">
-          <element name="input1.flowclr" value"input1.flowclr"/>
-          <element name="input2.flowclr" value="input2.flowcl"/>	
-        </collection> 
-      </param>	
-      <param name="samp_names" value="Sample1, Sample2"/>
-      <output name="output" file="output.flowtext"/>
+      <param name="inputs" value="input1.flowclr,input2.flowclr,input3.flowclr"/>
+      <output name="output" file="output1.flowtext"/>
+    </test>
+    <test>
+      <param name="inputs" value="input1.flowclr,input2.flowclr,input3.flowclr"/>
+      <param name="sample_names" value="S1,S2,S3"/>
+      <output name="output" file="output2.flowtext"/>
     </test>
   </tests>
--->
   <help><![CDATA[
-   This tool adds a column to flowtext or flowclustered file with the sample information. 
+   This tool adds a column to flowtext or flowclustered file with the sample information.
 
 -----
 
 **Input files**
 
-This tool requires valid flowtext files as input. Files are processed serially. 
+This tool requires valid flowtext files as input. Files are processed serially.
 
 If inputing sample names manually then the sample names must be in order of the flowtext files in the dataset collection.
 
 If using the flowtext file names as the sample names then you can choose to keep the whole flowtext file name as sample name or the names can be abbreviated removing any letters after the fullstop.
-Alternatively flowtext file names can be manually changed prior to running this tool. 
+Alternatively flowtext file names can be manually changed prior to running this tool.
 
 **Output file**
 
@@ -69,7 +84,7 @@ File 2
    262     73      437     69      0       146     ...
    340     115     509     268     0       74      ...
    ...     ...     ...     ...     ...     ...     ...
-  
+
 **Output**::
 
 File 1
@@ -79,16 +94,13 @@ File 1
    262     73      437     69      0       146     ...    1
    340     115     509     268     0       74      ...    1
    ...     ...     ...     ...     ...     ...     ...    1
-   
-File 2
-   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...  sample
    449     157     551     129     169     292     ...    2
    894     1023    199     277     320     227     ...    2
    262     73      437     69      0       146     ...    2
    340     115     509     268     0       74      ...    2
    ...     ...     ...     ...     ...     ...     ...    2
 
-   
+
  ]]>
   </help>
 </tool>
