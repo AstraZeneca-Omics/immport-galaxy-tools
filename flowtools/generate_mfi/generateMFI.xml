@@ -1,9 +1,8 @@
 <tool id="generate_mfi" name="Generate the centroids" version="1.0+galaxy0" profile="18.01">
   <description>from a flow result file</description>
   <requirements>
-    <requirement type="package" version="0.17.1">pandas</requirement>
-    <requirement type="package" version="1.10.2">numpy</requirement>
-    <requirement type="package" version="0.16.0">scipy</requirement>
+    <requirement type="package" version="1.0.5">pandas</requirement>
+    <requirement type="package" version="1.5.1">scipy</requirement>
   </requirements>
   <stdio>
     <exit_code range="1:" />

@@ -3,7 +3,6 @@
 #                  Copyright (c) 2016 Northrop Grumman.
 #                          All rights reserved.
 ######################################################################
-from __future__ import print_function
 import sys
 from argparse import ArgumentParser
 import pandas as pd
