@@ -52,7 +52,7 @@
 
 **Input files**
 
-This tool requires valid flowtext files as input. Files are processed serially.
+This tool requires a valid flowtext file collection as input. Files are processed serially.
 
 If inputing sample names manually then the sample names must be in order of the flowtext files in the dataset collection.
 
@@ -65,41 +65,41 @@ The output is a flowtext file collection with each flowtext file containing the 
 
 -----
 
-**Example**::
+**Example**
 
 
-**Input**::
-
-File 1
-   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...
-   449     157     551     129     169     292     ...
-   894     1023	   199     277     320     227     ...
-   262     73      437     69      0       146     ...
-   340     115     509     268     0       74      ...
-   ...     ...     ...     ...     ...     ...     ...
-File 2
-   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...
-   449     157     551     129     169     292     ...
-   894     1023    199     277     320     227     ...
-   262     73      437     69      0       146     ...
-   340     115     509     268     0       74      ...
-   ...     ...     ...     ...     ...     ...     ...
-
-**Output**::
+*Input*::
 
 File 1
-   FSS     SSC   Marker1 Marker2 Marker3 Marker4   ...  sample
-   449     157     551     129     169     292     ...    1
-   894     1023    199     277     320     227     ...    1
-   262     73      437     69      0       146     ...    1
-   340     115     509     268     0       74      ...    1
-   ...     ...     ...     ...     ...     ...     ...    1
-   449     157     551     129     169     292     ...    2
-   894     1023    199     277     320     227     ...    2
-   262     73      437     69      0       146     ...    2
-   340     115     509     268     0       74      ...    2
-   ...     ...     ...     ...     ...     ...     ...    2
 
+  FSC      SSC     Marker1 Marker2 Marker3 Marker4 Population  
+  449      157     551     129     169     292     1            
+  894      1023    199     277     320     227     3           
+  262      73      437     69      0       146     6           
+  340      115     509     268     0       74      1           
+  ...      ...     ...     ...     ...     ...     ...         
+
+File 2  
+  FSC	   SSC	   Marker1 Marker2 Marker3 Marker4 Population 
+  523      354     554     176     213     185     2           
+  678      8096    98      74      417     267     6           
+  226      89      467     123     0       324     2           
+  660      175     589     178     1       89      7           
+  ...      ...     ...     ...     ...     ...     ...         
+
+*Output*::
+
+  FSC      SSC     Marker1 Marker2 Marker3 Marker4 Population  Sample
+  449      157     551     129     169     292     1           sample1 
+  894      1023    199     277     320     227     3           sample1
+  262      73      437     69      0       146     6           sample1
+  340      115     509     268     0       74      1           sample1
+  ...      ...     ...     ...     ...     ...     ...         ...
+  523      354     554     176     213     185     2           sample2
+  678      8096    98      74      417     267     6           sample2
+  226      89      467     123     0       324     2           sample2
+  660      175     589     178     1       89      7           sample2
+  ...      ...     ...     ...     ...     ...     ...         ...
 
  ]]>
   </help>
