@@ -67,10 +67,7 @@ The output is a flowtext file collection with each flowtext file containing the 
 
 **Example**
 
-
-*Input*::
-
-File 1
+*File 1*:
 
   FSC      SSC     Marker1 Marker2 Marker3 Marker4 Population  
   449      157     551     129     169     292     1            
@@ -79,7 +76,8 @@ File 1
   340      115     509     268     0       74      1           
   ...      ...     ...     ...     ...     ...     ...         
 
-File 2  
+*File 2*:
+
   FSC	   SSC	   Marker1 Marker2 Marker3 Marker4 Population 
   523      354     554     176     213     185     2           
   678      8096    98      74      417     267     6           
