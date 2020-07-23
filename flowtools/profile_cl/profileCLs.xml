@@ -24,9 +24,9 @@
       <param name="input" value="input.flowscore"/>
       <output name="html_file" file="out.html">
         <extra_files type="file" name="CLprofiles.txt" value="CLprofiles.txt"/>
-        <extra_files type="file" name="flowCL_pop01.pdf" value="flowCL_pop01.pdf" compare="contains"/>
+        <extra_files type="file" name="flowCL_pop01.pdf" value="flowCL_pop01.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowCL_pop01.txt" value="flowCL_pop01.txt"/>
-        <extra_files type="file" name="flowCL_pop03.pdf" value="flowCL_pop03.pdf" compare="contains"/>
+        <extra_files type="file" name="flowCL_pop03.pdf" value="flowCL_pop03.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowCL_pop03.txt" value="flowCL_pop03.txt"/>
         <extra_files type="file" name="scores.txt" value="scores.txt"/>
       </output>
