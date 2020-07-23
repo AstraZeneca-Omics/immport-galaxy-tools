@@ -8,7 +8,6 @@
 # version 1.1 - August 2017
 # added upper limit to nb of clusters (40)
 #
-from __future__ import print_function
 import sys
 import os
 import pandas as pd
