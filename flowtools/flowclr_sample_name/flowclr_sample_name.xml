@@ -45,51 +45,49 @@
       <output name="output" file="output2.flowtext"/>
     </test>
   </tests>
-  <help><![CDATA[
-   This tool adds a column to a tabular file (including a flowtext or flowclustered file) with the sample information.
+  <help><![CDATA[    
+Flowclr Sample Name
+-------------------
 
------
+This tool adds a column to a tabular file (including a flowtext or flowclustered file) with the sample information.
 
 **Input files**
-
 This tool requires a valid collection of tabular files such as flowtext files or clustered flowtext files. Files are processed serially.
 
 .. class:: warningmark
 
-By defualt the full file name will be used as sample name. Alternatively file names can be manually changed prior to running this tool.
-
+By default the full file name will be used as sample name. Alternatively file names can be manually changed prior to running this tool.
 If inputing sample names manually, then you must supply a comma separated list of sample names in order of the files in the dataset collection.
 
 **Output file**
-
-The output is a single merged tabular file (e.g. flowtext file) containing rows for each input tabular file; with a column containing the sample information 
+The output is a single merged tabular file (e.g. flowtext file) containing rows for each input tabular file; with a column containing the sample information
 
 -----
 
 **Example**
 
-*File 1*:
+*File 1*::
 
   FSC     SSC       Marker1   Marker2   Marker3   Marker4   Population
-  449     157       551       129       169       292       1            
-  894     1023      199       277       320       227       3            
-  262     73        437       69        0         146       6            
-  340     115       509       268       0         74        1            
-  ...     ...       ...       ...       ...       ...       ...          
+  449     157       551       129       169       292       1
+  894     1023      199       277       320       227       3
+  262     73        437       69        0         146       6
+  340     115       509       268       0         74        1
+  ...     ...       ...       ...       ...       ...       ...
 
-*File 2*:
+*File 2*::
 
-  FSC	   SSC	   Marker1 Marker2 Marker3 Marker4 Population  
-  523      354     554     176     213     185     2           
-  678      8096    98      74      417     267     6           
-  226      89      467     123     0       324     2           
-  660      175     589     178     1       89      7           
-  ...      ...     ...     ...     ...     ...     ...         
+  FSC	   SSC	   Marker1 Marker2 Marker3 Marker4 Population
+  523      354     554     176     213     185     2
+  678      8096    98      74      417     267     6
+  226      89      467     123     0       324     2
+  660      175     589     178     1       89      7
+  ...      ...     ...     ...     ...     ...     ...
 
 *Output*::
 
   FSC      SSC     Marker1 Marker2 Marker3 Marker4 Population  Sample
-  449      157     551     129     169     292     1           sample1 
+  449      157     551     129     169     292     1           sample1
   894      1023    199     277     320     227     3           sample1
   262      73      437     69      0       146     6           sample1
   340      115     509     268     0       74      1           sample1
@@ -99,7 +97,6 @@ The output is a single merged tabular file (e.g. flowtext file) containing rows 
   226      89      467     123     0       324     2           sample2
   660      175     589     178     1       89      7           sample2
   ...      ...     ...     ...     ...     ...     ...         ...
-
  ]]>
   </help>
 </tool>
