@@ -11,8 +11,8 @@
 #
 #
 
-library(flowCL)
-library(base)
+suppressWarnings(suppressMessages(library(flowCL)))
+suppressWarnings(suppressMessages(library(base)))
 
 getOntology <- function(output_file, markers) {
   res <- flowCL(markers, ResetArch = TRUE)
