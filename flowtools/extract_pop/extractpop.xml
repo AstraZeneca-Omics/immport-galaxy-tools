@@ -1,14 +1,16 @@
 <tool id="extract_pop" name="Extract populations" version="1.0+galaxy0" profile="18.01">
   <description>of interest from FLOCK or Cross Sample output</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.0.5">pandas</requirement>
   </requirements>
   <stdio>
+    <exit_code range="1"/>
     <exit_code range="2" level="fatal" description="Please provide a comma separated list of populations to extract." />
     <exit_code range="3" level="fatal" description="The populations to extract must be integers (i.e,: 1,2,4.)" />
+    <exit_code range="4:"/>
   </stdio>
   <command><![CDATA[
-    extractpop.py -i '${input}' -o '${output}' -p '${population}' -m '${method}'
+    python '$__tool_directory__/extractpop.py' -i '${input}' -o '${output}' -p '${population}' -m '${method}'
   ]]>
   </command>
   <inputs>
