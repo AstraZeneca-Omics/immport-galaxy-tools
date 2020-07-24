@@ -300,6 +300,10 @@ processFCSFile <- function(input_file, output_file="", compensate=FALSE,
   # Compensate
   #
   spill <- keywords$SPILL
+  
+  if(is.null(spill)){ 
+      spill <- keywords[["$SPILLOVER"]]
+  }
 
   if (is.null(spill) == FALSE && compensate == TRUE) {
     if (debug) {
