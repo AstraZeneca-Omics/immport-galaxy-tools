@@ -1,4 +1,4 @@
-<tool id="gen_flow_overview" name="Generate overview information" version="1.1+galaxy0" profile="18.01">
+<tool id="gen_flow_overview" name="Generate overview information" version="1.2+galaxy0" profile="18.01">
   <description>of reference set of clusters or populations.</description>
   <requirements>
     <requirement type="package" version="3.3.0">matplotlib</requirement>
@@ -54,7 +54,7 @@
         <extra_files type="file" name="flow.mfi_pop" value="out1/flow.mfi_pop"/>
         <extra_files type="file" name="flow.overview" value="out1/flow.overview"/>
         <extra_files type="file" name="flow.sample" value="out1/flow.sample"/>
-        <extra_files type="file" name="boxplot.json" value="out1/boxplotData.json" compare="sim_size"/>
+        <extra_files type="file" name="boxplotData.json" value="out1/boxplotData.json" compare="sim_size"/>
         <extra_files type="file" name="m0_m0_90X90.png" value="out1/m0_m0_90X90.png" compare="contains"/>
         <extra_files type="file" name="m0_m1_90X90.png" value="out1/m0_m1_90X90.png" compare="contains"/>
         <extra_files type="file" name="m1_m0_90X90.png" value="out1/m1_m0_90X90.png" compare="contains"/>
@@ -67,7 +67,7 @@
       <param name="runcl" value="yes"/>
       <param name="scores" value="profile.flowscore"/>
       <output name="output_file" file="out2/out.html">
-        <extra_files type="file" name="boxplot.json" value="out2/boxplotData.json"/>
+        <extra_files type="file" name="boxplotData.json" value="out2/boxplotData.json" compare="sim_size"/>
         <extra_files type="file" name="CLprofiles.txt" value="out2/CLprofiles.txt"/>
         <extra_files type="file" name="flow.mfi" value="out2/flow.mfi"/>
         <extra_files type="file" name="flow.mfi_pop" value="out2/flow.mfi_pop"/>
