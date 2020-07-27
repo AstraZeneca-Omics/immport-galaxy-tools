@@ -80,7 +80,6 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
         tmpdf.Population = missing_pop
         df = df.append(tmpdf)
 
-    df.to_csv("/tmp/populations.csv", sep="\t")
     pops = df.groupby('Population')
     q1 = pops.quantile(q=0.25)
     q2 = pops.quantile(q=0.5)
@@ -109,9 +108,6 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
             'lower': lower,
             'outliers': outdf.T,
             'mfi': mfi}, keys=['q1','q2','q3','upper','lower','outliers','mfi'])
-
-    with open("/tmp/tst.json", "w") as js_tmp:
-        js_tmp.write(panel_to_json_string(data))
 
     with open(output_json, "w") as js_all:
         js_all.write(panel_to_json_string(data))

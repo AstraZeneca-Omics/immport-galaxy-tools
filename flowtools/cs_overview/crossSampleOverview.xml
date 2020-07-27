@@ -14,6 +14,10 @@
     #for $f in $cs_outputs
        -s $f
     #end for
+    ;
+    cp -r '$__tool_directory__'/js '${html_file.files_path}/';
+    cp -r '$__tool_directory__'/css '${html_file.files_path}/';
+    cp -r '$__tool_directory__'/images '${html_file.files_path}/';
   ]]>
   </command>
   <inputs>
@@ -41,7 +45,7 @@
       <output name="html_file" file="out.html" compare="sim_size">
         <extra_files type="file" name="csAllMFIs.tsv" value="csAllMFIs.tsv"/>
         <extra_files type="file" name="csOverview.tsv" value="csOverview.tsv"/>
-        <extra_files type="file" name="csBoxplotData.json" value="csBoxplotData.json"/>
+        <extra_files type="file" name="csBoxplotData.json" value="csBoxplotData.json" compare="sim_size"/>
       </output>
     </test>
   </tests>
