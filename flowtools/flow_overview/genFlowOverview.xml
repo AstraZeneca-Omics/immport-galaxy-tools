@@ -51,7 +51,7 @@
         <extra_files type="file" name="flow.mfi_pop" value="out1/flow.mfi_pop"/>
         <extra_files type="file" name="flow.overview" value="out1/flow.overview"/>
         <extra_files type="file" name="flow.sample" value="out1/flow.sample"/>
-        <extra_files type="file" name="boxplot.json" value="out1/boxplotData.json"/>
+        <extra_files type="file" name="boxplot.json" value="out1/boxplotData.json" compare="sim_size"/>
         <extra_files type="file" name="m0_m0_90X90.png" value="out1/m0_m0_90X90.png" compare="contains"/>
         <extra_files type="file" name="m0_m1_90X90.png" value="out1/m0_m1_90X90.png" compare="contains"/>
         <extra_files type="file" name="m1_m0_90X90.png" value="out1/m1_m0_90X90.png" compare="contains"/>

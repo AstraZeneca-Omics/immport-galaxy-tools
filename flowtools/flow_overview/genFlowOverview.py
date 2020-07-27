@@ -136,14 +136,16 @@ def translate_profiles(input_file, tool_dir, html_dir):
 
 
 # boxplots data massaging
-def panel_to_json_string(panel):
+def panel_to_json_string(df):
     # from http://stackoverflow.com/questions/28078118/merge-many-json-strings-with-python-pandas-inputs
     def __merge_stream(key, stream):
         return '"' + key + '"' + ': ' + stream + ', '
     try:
+        if 'Unnamed: 0' in df.columns:
+            df = df.drop(['Unnamed: 0'], axis=1)
         stream = '{'
-        for item in panel.items:
-            stream += __merge_stream(item, panel.loc[item, :, :].to_json())
+        for index, subdf in df.groupby(level=0):
+            stream += __merge_stream(index, df.loc[index, :, :].droplevel(0).to_json())
         # take out extra last comma
         stream = stream[:-2]
         # add the final paren
@@ -157,7 +159,9 @@ def get_outliers(group, upper, lower):
     cat = group.name
     out = {}
     for marker in group:
-        out[marker] = group[(group[marker] > upper.loc[cat][marker]) | (group[marker] < lower.loc[cat][marker])][marker]
+        # skip population since upper and lower don't contain it, since it was made after a group by Population
+        if marker != 'Population':
+            out[marker] = group[(group[marker] > upper.loc[cat][marker]) | (group[marker] < lower.loc[cat][marker])][marker]
     return out
 
 
@@ -200,17 +204,16 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
                 outliers[population][marker] = tmp_outliers
     outdf = pd.DataFrame(outliers)
 
-    data = {'q1': q1,
+    data = pd.concat({'q1': q1,
             'q2': q2,
             'q3': q3,
             'upper': upper,
             'lower': lower,
             'outliers': outdf.T,
-            'mfi': mfi}
-    wp = pd.Panel(data)
+            'mfi': mfi}, keys=['q1','q2','q3','upper','lower','outliers','mfi'])
 
     with open(output_json, "w") as js_all:
-        js_all.write(panel_to_json_string(wp))
+        js_all.write(panel_to_json_string(data))
 
     return resampled
 
