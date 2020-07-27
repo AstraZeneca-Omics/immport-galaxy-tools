@@ -19,7 +19,8 @@
     python '$__tool_directory__/genFlowOverview.py' -i '${input}' -o '${html_file}' -M '${mfi}' -d '${html_file.files_path}' -t '$__tool_directory__' -p '${scores}';
    #end if
 
-   cp -r '$__tool_directory__'/js '${html_file.files_path}'
+   cp -r '$__tool_directory__'/js '${html_file.files_path}';
+   cp -r '$__tool_directory__'/css '${html_file.files_path}';
   ]]>
   </command>
   <inputs>
