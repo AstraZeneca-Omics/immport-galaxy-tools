@@ -16,7 +16,7 @@
    #if $ontology.runcl == "no"
     python '$__tool_directory__/genFlowOverview.py' -i '${input}' -o '${html_file}' -M '${mfi}' -d '${html_file.files_path}' -t '$__tool_directory__'
    #else
-    python '$__tool_directory__/genFlowOverview.py' -i '${input}' -o '${html_file}' -M '${mfi}' -d '${html_file.files_path}' -t '$__tool_directory__'-p '${scores}'
+    python '$__tool_directory__/genFlowOverview.py' -i '${input}' -o '${html_file}' -M '${mfi}' -d '${html_file.files_path}' -t '$__tool_directory__' -p '${scores}'
    #end if
   ]]>
   </command>
