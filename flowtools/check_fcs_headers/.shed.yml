@@ -1,5 +1,5 @@
-owner: iuc
-name: check_fcs_header
+owner: immport-devteam
+name: check_fcs_headers
 description: returns a table of the headers of a set of FCS files
 long_description: |
     **Input**

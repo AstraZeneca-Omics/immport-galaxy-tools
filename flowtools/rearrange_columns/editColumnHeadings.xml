@@ -1,85 +1,147 @@
-<tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="1.1">
+<tool id="edit_rearrange_columns" name="Remove, rearrange and/or rename columns" version="2.0+galaxy0" profile="18.01">
   <description>in txt-converted FCS files</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.0.5">pandas</requirement>
   </requirements>
   <stdio>
-    <exit_code range="2" level="fatal" description="Please provide a comma separated list of integers for columns you want to keep." />
-    <exit_code range="3" level="fatal" description="Please provide integers for columns you want to keep." />
-    <exit_code range="4" level="fatal" description="List of column headings and list of selected columns must match. For instance for columns 1,3,4: Marker1,,Marker3." />
+    <exit_code range="1" level="fatal" description="Please pick something for the tool to do =)" />
+    <exit_code range="2" level="fatal" description="Please provide column headers to replace." />
+    <exit_code range="3" level="fatal" description="Please provide column headers to use as replacement." />
+    <exit_code range="4" level="fatal" description="Column headers provided were not found in the input file." />
+    <exit_code range="5" level="fatal" description="More headers provided than columns in the input file." />
+    <exit_code range="6" level="fatal" description="New column headings and column headings must be provided together." />
+    <exit_code range="7" level="fatal" description="Please provide a new column order or subset." />
+    <exit_code range="8" level="fatal" description="Columns provided for subsetting/re-ordering are not in the input file" />
+    <exit_code range="9:" level="fatal"/>
   </stdio>
   <command><![CDATA[
-      editColumnHeadings.py -o '${output_file}' -i '${input}'
-  #if $columns
-    -c '${columns}'
+	  python3 '$__tool_directory__/editColumnHeadings.py' -o '${output_file}' -i '${input}'
+  #if $rename.nn:
+    #for $add in $rename.more_replacements:
+      -r '${add.to_rep}' -w '${add.replace_with}'
+    #end for
   #end if
-  #if $colnames
-    -n '${colnames}'
+  #if $reorder.order_col:
+    -n '${reorder.order}'
   #end if
   ]]>
   </command>
   <inputs>
-    <param format="flowtext,txt,tabular" name="input" type="data" label="Text file"/>
-    <param name="columns" type="text" label="Column order:" value="i.e.:1,5,2" optional="true" help="By default, will keep all columns in the same order."/>
-    <param name="colnames" type="text" label="New column headings:" value="i.e.:Marker1,,Marker4" optional="true" help="By default, will not change the column headings. Check below for more details.">
-    </param>
+    <param format="flowtext" name="input" type="data" label="Text file"/>
+
+    <conditional name="rename">
+      <param name="nn" type="boolean" label="Edit column headings?" help="By default, column headings are not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
+      </param>
+      <when value="TRUE">
+        <repeat name="more_replacements" title="Column to edit">
+          <param name="to_rep" type="text" label="Column headings to replace:" value="i.e.:TLR 6, TLR6PE" help="Please indicate which column heading to replace. If there are more than one heading to replace with the SAME replacement, enter a comma-separated list. See below for examples."/>
+          <param name="replace_with" type="text" label="Replace with:" value="i.e.:TLR6" help="Please indicate what to use for replacement." />
+        </repeat>
+      </when>
+    </conditional>
+
+    <conditional name="reorder">
+      <param name="order_col" type="boolean" label="Re-order or select column?" help="By default, column order is not changed." checked="false" truevalue="TRUE" falsevalue="FALSE">
+      </param>
+      <when value="TRUE">
+        <param name="order" type="text" label="New order:" value="i.e.:1,2,5 or CD3,CD4,CCR3" help="Please indicate columns to keep in the order they should be in. This operation happens after renaming. If subsetting/re-ordering and renaming columns, indicate new column heading names or numerical order."/>
+      </when>
+    </conditional>
   </inputs>
   <outputs>
-    <data format="flowtext" name="output_file" label="Rearranged ${input.name}"/>
+    <data format="flowtext" name="output_file" label="Rearranged ${input.name} on ${on_string}"/>
   </outputs>
   <tests>
     <test>
       <param name="input" value="input1.txt"/>
-      <param name="columns" value="3,4,5,6"/>
-      <param name="colnames" value="CD4,CCR3,CD8,CCR7"/>
-      <output name="output_file" file="output1.flowtext"/>
+      <conditional name="reorder">
+        <param name="order_col" value="True"/>
+        <param name="order" value="CD4,CCR3,CD8,CCR7"/>
+      </conditional>
+      <conditional name="rename">
+        <param name="nn" value="True"/>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="FITC CD4"/>
+          <param name="replace_with" value="CD4"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PE CCR3"/>
+          <param name="replace_with" value="CCR3"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PP CD8"/>
+          <param name="replace_with" value="CD8"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="APC CCR4"/>
+          <param name="replace_with" value="CCR7"/>
+        </repeat>
+      </conditional>
+      <output name="output_file" value="output1.flowtext"/>
     </test>
     <test>
       <param name="input" value="input2.txt"/>
-      <param name="columns" value="2,3,6,1"/>
-      <param name="colnames" value="i.e.:Marker1,,Marker4"/>
-      <output name="output_file" file="output2.flowtext"/>
+      <conditional name="reorder">
+        <param name="order_col" value="True"/>
+        <param name="order" value="Side Scatter,FITC CD4,APC CCR5,Forward Scatter"/>
+      </conditional>
+      <output name="output_file" value="output2.flowtext"/>
     </test>
     <test>
       <param name="input" value="input3.txt"/>
-      <param name="columns" value="i.e.:1,5,2"/>
-      <param name="colnames" value="M1,M2,M3,M4,M5,M6"/>
-      <output name="output_file" file="output3.flowtext"/>
+      <conditional name="rename">
+        <param name="nn" value="True"/>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="Forward Scatter"/>
+          <param name="replace_with" value="M1"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="Side Scatter"/>
+          <param name="replace_with" value="M2"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="FITC CD4"/>
+          <param name="replace_with" value="M3"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PE CD25"/>
+          <param name="replace_with" value="M4"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="PP CD3"/>
+          <param name="replace_with" value="M5"/>
+        </repeat>
+        <repeat name="more_replacements">
+          <param name="to_rep" value="APC CD45RA"/>
+          <param name="replace_with" value="M6"/>
+        </repeat>
+      </conditional>
+      <output name="output_file" value="output3.flowtext"/>
     </test>
   </tests>
   <help><![CDATA[
    This tool enables the removal, rearrangement and/or renaming of text file columns.
-
 -----
-
 **Input files**
-
 This tool requires txt, flowtext or tabular files as input.
-
-**Column order**
-
-Please indicate columns to keep in the order in which they should be (comma-separated list).
-This field is optional.
-
-**Column names**
-
-Please indicate the new columns headings in the order in which they should appear in the ouptut file (comma-separated list). The number of headings should match the number of columns in the output.
-This field is optional.
-
-.. class: warningmark
-
-When providing column order AND new column headings the column count for each must match. See below for an example.
-
+**Column headings**
+This field is optional. Please indicate the column headers that need to be replaced. If one marker exists under several names in different files, run the tool in batch mode and include all names to harmonize as a comma-separated list.
+.. class:: warningmark
+Column headings provided have to match file content.
+.. class:: infomark
+Tip: One of the tools in the Text File Tools section can help check headers in the files to edit:
+- Check headers of any set of flowtext files.
+**Replace with**
+Please indicate what to replace the headers indicated in the previous field with. If the previous field contains a comma-separated list, each of these items will be replaced.
+..class:: infomark
+Tip: Add more headings to modify by clicking on 'Insert Column to edit'
+**New order**
+This field is optional. Please indicate which subset of columns (or all) in which order should be output.
 **Output file**
-
 The output flowtext file is a copy of the input file with rearranged and/or renamed columns.
-
 -----
-
 **Examples**
-
 **Input file**::
-
    Marker1 Marker2 Marker3 Marker4 Marker5
    4       45      123     1956    62534
    3       65      104     1254    36576
@@ -88,14 +150,10 @@ The output flowtext file is a copy of the input file with rearranged and/or rena
    5       83      532     6256    34763
    4       15      877     9312    21265
    ...     ...     ...     ...     ...
-
 *Example 1*
-
 - Column order: 5,3,2,4
 - Column names: Default
-
 *Output1*::
-
    Marker5 Marker3 Marker2 Marker4
    62534   123     45      1956
    36576   104     65      1254
@@ -104,14 +162,10 @@ The output flowtext file is a copy of the input file with rearranged and/or rena
    34763   532     83      6256
    21265   877     15      9312
    ...     ...     ...     ...
-
 *Example 2*
-
 - Column order: 5,3,2,4
 - Column names: Mar34,,Mar7,
-
 *Output2*::
-
    Mar34 Marker3 Mar7 Marker4
    62534 123     45   1956
    36576 104     65   1254
@@ -120,14 +174,10 @@ The output flowtext file is a copy of the input file with rearranged and/or rena
    34763 532     83   6256
    21265 877     15   9312
    ...   ...     ...  ...
-
 *Example 3*
-
 - Column order: Default
 - Column names: Mar23,,,Mar7,Mar8
-
 *Output3*::
-
    Mar23 Marker2 Marker3 Mar7 Mar8
    4     45      123     1956 62534
    3     65      104     1254 36576

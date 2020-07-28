@@ -1,0 +1,102 @@
+<tool id="flclr_sample_name" name="Add sample information and merge" version="1.0+galaxy1" profile="18.01">
+  <description>a flow clustered or tabular text file collection.</description>
+  <requirements>
+     <requirement type="package" version="4.4">sed</requirement>
+  </requirements>
+  <stdio>
+    <exit_code range="1:" level="fatal" description="See stderr for more details." />
+  </stdio>
+  <command><![CDATA[
+    #set $first = $inputs[0]
+    head -n 1 '$first' | sed "s/\$/\t$header/" > '$output';
+
+    #if $sample_names
+    #set $identifiers = [ x.strip() for x in $sample_names.split(",") ]
+    #else
+    #set $identifiers = [ i.element_identifier for i in $inputs ]
+    #end if
+
+    #if len($identifiers) != len($inputs)
+    #  echo "Error, number of file identifiers/samples doesn't match the number of files.";
+    #  exit(1)
+    #end if
+
+    #for $i, $input in enumerate($inputs)
+      tail -n +2 '$input' | sed "s/\$/\t$identifiers[$i]/" >> '$output';
+    #end for#
+  ]]>
+  </command>
+  <inputs>
+    <param name="inputs" format="flowclr,tabular" type="data" multiple="true" min="2" label="Clustered flowtext or tabular file collection"/>
+    <param name="sample_names" type="text" label="Sample names" optional="true" help="Supply the sample names of each flowtext file in order of the flowtext files in the data collection, comma separated, to override the collection identifier. Please see below for more information on formatting."/>
+    <param name="header" type="text" value="Sample" optional="true" label="Column name for identifier" help="Sample by default, names the new column added with the identifier for each file."/>
+  </inputs>
+  <outputs>
+    <data format="flowtext" name="output" label="Merged output"/>
+  </outputs>
+  <tests>
+    <test>
+      <param name="inputs" value="input1.flowclr,input2.flowclr,input3.flowclr"/>
+      <output name="output" file="output1.flowtext"/>
+    </test>
+    <test>
+      <param name="inputs" value="input1.flowclr,input2.flowclr,input3.flowclr"/>
+      <param name="sample_names" value="S1,S2,S3"/>
+      <output name="output" file="output2.flowtext"/>
+    </test>
+  </tests>
+  <help><![CDATA[    
+Flowclr Sample Name
+-------------------
+
+This tool adds a column to a tabular file (including a flowtext or flowclustered file) with the sample information.
+
+**Input files**
+This tool requires a valid collection of tabular files such as flowtext files or clustered flowtext files. Files are processed serially.
+
+.. class:: warningmark
+
+By default the full file name will be used as sample name. Alternatively file names can be manually changed prior to running this tool.
+If inputing sample names manually, then you must supply a comma separated list of sample names in order of the files in the dataset collection.
+
+**Output file**
+The output is a single merged tabular file (e.g. flowtext file) containing rows for each input tabular file; with a column containing the sample information
+
+-----
+
+**Example**
+
+*File 1*::
+
+  FSC     SSC       Marker1   Marker2   Marker3   Marker4   Population
+  449     157       551       129       169       292       1
+  894     1023      199       277       320       227       3
+  262     73        437       69        0         146       6
+  340     115       509       268       0         74        1
+  ...     ...       ...       ...       ...       ...       ...
+
+*File 2*::
+
+  FSC	   SSC	   Marker1 Marker2 Marker3 Marker4 Population
+  523      354     554     176     213     185     2
+  678      8096    98      74      417     267     6
+  226      89      467     123     0       324     2
+  660      175     589     178     1       89      7
+  ...      ...     ...     ...     ...     ...     ...
+
+*Output*::
+
+  FSC      SSC     Marker1 Marker2 Marker3 Marker4 Population  Sample
+  449      157     551     129     169     292     1           sample1
+  894      1023    199     277     320     227     3           sample1
+  262      73      437     69      0       146     6           sample1
+  340      115     509     268     0       74      1           sample1
+  ...      ...     ...     ...     ...     ...     ...         ...
+  523      354     554     176     213     185     2           sample2
+  678      8096    98      74      417     267     6           sample2
+  226      89      467     123     0       324     2           sample2
+  660      175     589     178     1       89      7           sample2
+  ...      ...     ...     ...     ...     ...     ...         ...
+ ]]>
+  </help>
+</tool>

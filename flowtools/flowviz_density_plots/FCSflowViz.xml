@@ -1,7 +1,7 @@
-<tool id="flowviz_density_plots" name="Generate stacked density plots" version="1.0">
+<tool id="flowviz_density_plots" name="Generate stacked density plots" version="1.0+galaxy0">
   <description>for a set of FCS files</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.40.0">bioconductor-flowviz</requirement>
   </requirements>
   <stdio>
     <exit_code range="10" level="fatal" description="Please provide a comma separated list of channels to plot" />
@@ -9,7 +9,7 @@
     <exit_code range="12" level="fatal" description="The set of FCS files must have the same set of channels" />
   </stdio>
   <command><![CDATA[
-      FCSflowViz.R '${channels}' '${output}' $outformat
+      Rscript $__tool_directory__/FCSflowViz.R '${channels}' '${output}' '${outformat}'
       #for $f in $input
         '${f}' '${f.name}'
       #end for
@@ -57,9 +57,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool generates stacked 1D density plots using flowViz.
+FlowViz stacked 1D density plots
+--------------------------------
 
------
+This tool generates stacked 1D density plots using flowViz.
 
 **Input files**
 
