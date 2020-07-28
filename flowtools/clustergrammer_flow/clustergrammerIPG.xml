@@ -1,18 +1,16 @@
 <tool id="clustergrammer_flow" name="Generate a heat map" version="1.1+galaxy0" profile="18.01">
   <description>of a flow analysis using Clustergrammer</description>
   <requirements>
-    <requirement type="package" version="2.8">jinja2</requirement>
-    <requirement type="package" version="1.13.5">clustergrammer</requirement>
-    <requirement type="package" version="1.9.2">numpy</requirement>
-    <requirement type="package" version="0.17.0">scipy</requirement>
-    <requirement type="package" version="0.18.0">pandas</requirement>
-    <requirement type="package" version="0.19.0">scikit-learn</requirement>
+    <requirement type="package" version="2.11.2">jinja2</requirement>
+    <requirement type="package" version="1.13.6">clustergrammer</requirement>
   </requirements>
   <stdio>
+    <exit_code range="1"/>
     <exit_code range="2" level="fatal" description="Please provide a comma-separated list of indices." />
     <exit_code range="3" level="fatal" description="Please provide integer as indices." />
     <exit_code range="4" level="fatal" description="Indices within one of the categories are used several times." />
     <exit_code range="5" level="fatal" description="Please provide indices within the range of your input matrix." />
+    <exit_code range="6:"/>
   </stdio>
   <command><![CDATA[
       python '$__tool_directory__/clustergrammerIPG.py' '${input_matrix}' '${html_file}' '${html_file.files_path}' '$__tool_directory__' '${dist_type}' '${linkage}'
@@ -70,33 +68,55 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool generates a heat map from the provided input matrix using Clustergrammer.
+This tool generates a heat map from the provided input matrix using Clustergrammer.
+
 -----
+
 **Input**
+
 Please provide a tab-separated matrix of values as input, for instance a centroid file from a FLOCK analysis.
 Rows and columns can be annotated by setting up categories and labels for each group within categories.
+
 .. class:: infomark
+
 Any type of matrix can be used but the datatype expected by this tool is flowmfi. You can modify the file format of any file in your history by clicking on the pencil next to the name of your file, and going to the 'Datatype' tab.
+
 **Distance and Linkage types**
+
 Distance_ and linkage_ are computed using functions implemented in SciPy. Please refer to their documentation for further explanations.
+
 **Graphical output**
+
 The output is an interactive heat-map of the matrix provided.
+
 .. class:: warningmark
+
 The color scale represents ranges of fluorescence intensity and covers values between the minimun and maximum intensity values in the dataset used as input.
+
 .. class:: infomark
+
 Some features might not show up depending on the browser used. If the dendograms aren't displayed, try opening the output in Chrome.
+
 -----
+
 **Example**
+
 *Input*: Centroids file::
+
    Population Marker1 Marker2 Marker3
    1          38      49      10
    2          21      63      100
    3          31      52      45
    4          11      78      25
+
 *Interactive Graphical output*
-.. image:: ../../static/images/flowtools/clustergrammer.png
+
+.. image:: ./static/images/flowtools/clustergrammer.png
+
 -----
+
 Clustergrammer_ is a project from the Ma'ayan lab. Find them on GitHub_, more info here_.
+
 .. _Clustergrammer: http://amp.pharm.mssm.edu/clustergrammer/
 .. _GitHub: https://github.com/MaayanLab/clustergrammer
 .. _here: https://clustergrammer.readthedocs.io/getting_started.html
