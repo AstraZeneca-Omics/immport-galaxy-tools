@@ -1,13 +1,13 @@
-<tool id="flowclr_stats" name="Generate summary statistics" version="1.0">
+<tool id="flowclr_stats" name="Generate summary statistics" version="1.0+galaxy0">
   <description>of FLOCK output</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="0.17.1">pandas</requirement>
   </requirements>
   <stdio>
     <exit_code range="1:" />
   </stdio>
   <command><![CDATA[
-    flowclrstats.py -i '${input}' -p '${output}' -o '${report}'
+    python $__tool_directory__/flowclrstats.py -i '${input}' -p '${output}' -o '${report}'
  ]]>
   </command>
   <inputs>

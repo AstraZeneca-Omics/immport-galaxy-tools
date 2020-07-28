@@ -1,7 +1,7 @@
 <tool id="flowsom_cross_comp" name="Map individual FCS to reference SOM" version="1.0">
   <description>using FlowSOM.</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.8.0">bioconductor-flowsom</requirement>
   </requirements>
   <stdio>
     <exit_code range="10" level="fatal" description="Please provide valid input files (FCS or flowFrame)." />
@@ -11,7 +11,7 @@
     <exit_code range="14" level="fatal" description="FCS file and reference tree markers are inconsistent." />
   </stdio>
   <command><![CDATA[
-    FlowSOMMApIndividualFCS.R '${reftree}' 'newDataOutput' '${cluster}' '${tablecontent}' '${mfi}' '${stats}' '${mfistats}' '${allstats}'
+  Rscript $__tool_directory__/FlowSOMMApIndividualFCS.R '${reftree}' 'newDataOutput' '${cluster}' '${tablecontent}' '${mfi}' '${stats}' '${mfistats}' '${allstats}'
   #if $plot == "TRUE"
     'newDataTrees'
   #end if
@@ -74,9 +74,9 @@
       <output name="mfistats" file="out1.flowstat2" compare="sim_size"/>
       <output name="allstats" file="out1.flowstat3" compare="sim_size"/>
       <output_collection name="output" type="list" count="3">
-        <element name="input1.flowclr" file="run1/input1.flowclr" compare="sim_size"/>
-        <element name="input2.flowclr" file="run1/input2.flowclr" compare="sim_size"/>
-        <element name="input3.flowclr" file="run1/input3.flowclr" compare="sim_size"/>
+        <element name="input1.flowframe_clustered.flowclr" file="run1/input1.flowclr" compare="sim_size"/>
+        <element name="input2.flowframe_clustered.flowclr" file="run1/input2.flowclr" compare="sim_size"/>
+        <element name="input3.flowframe_clustered.flowclr" file="run1/input3.flowclr" compare="sim_size"/>
       </output_collection>
     </test>
     <test>
@@ -97,26 +97,27 @@
       <output name="mfistats" file="out2.flowstat2" compare="sim_size"/>
       <output name="allstats" file="out2.flowstat3" compare="sim_size"/>
       <output_collection name="output" type="list" count="3">
-        <element name="input1.flowclr" file="run2/input1.flowclr" compare="sim_size"/>
-        <element name="input2.flowclr" file="run2/input2.flowclr" compare="sim_size"/>
-        <element name="input3.flowclr" file="run2/input3.flowclr" compare="sim_size"/>
+        <element name="input1.fcs_clustered.flowclr" file="run2/input1.flowclr" compare="sim_size"/>
+        <element name="input2.fcs_clustered.flowclr" file="run2/input2.flowclr" compare="sim_size"/>
+        <element name="input3.fcs_clustered.flowclr" file="run2/input3.flowclr" compare="sim_size"/>
       </output_collection>
       <output_collection name="trees" type="list" count="3">
-        <element name="input1.png" file="run2/input1.png" compare="sim_size"/>
-        <element name="input2.png" file="run2/input2.png" compare="sim_size"/>
-        <element name="input3.png" file="run2/input3.png" compare="sim_size"/>
+        <element name="input1.fcs_tree.png" file="run2/input1.png" compare="sim_size"/>
+        <element name="input2.fcs_tree.png" file="run2/input2.png" compare="sim_size"/>
+        <element name="input3.fcs_tree.png" file="run2/input3.png" compare="sim_size"/>
       </output_collection>
       <output_collection name="mtrees" type="list" count="3">
-        <element name="input1.pdf" file="run2/input1.pdf" compare="sim_size" delta="100000"/>
-        <element name="input2.pdf" file="run2/input2.pdf" compare="sim_size" delta="100000"/>
-        <element name="input3.pdf" file="run2/input3.pdf" compare="sim_size" delta="100000"/>
+        <element name="input1.fcs_marker_plots.pdf" file="run2/input1.pdf" compare="sim_size" delta="100000"/>
+        <element name="input2.fcs_marker_plots.pdf" file="run2/input2.pdf" compare="sim_size" delta="100000"/>
+        <element name="input3.fcs_marker_plots.pdf" file="run2/input3.pdf" compare="sim_size" delta="100000"/>
       </output_collection>
     </test>
   </tests>
   <help><![CDATA[
-   This tool uses FlowSOM to compare individual FCS or flowframes to a SOM reference tree.
+Map fcs samples to SOM
+-------------------
 
------
+   This tool uses FlowSOM to compare individual FCS or flowframes to a SOM reference tree.
 
 **Input**
 
