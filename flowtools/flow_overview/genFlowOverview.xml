@@ -55,10 +55,10 @@
         <extra_files type="file" name="flow.overview" value="out1/flow.overview"/>
         <extra_files type="file" name="flow.sample" value="out1/flow.sample"/>
         <extra_files type="file" name="boxplotData.json" value="out1/boxplotData.json" compare="sim_size"/>
-        <extra_files type="file" name="m0_m0_90X90.png" value="out1/m0_m0_90X90.png" compare="contains"/>
-        <extra_files type="file" name="m0_m1_90X90.png" value="out1/m0_m1_90X90.png" compare="contains"/>
-        <extra_files type="file" name="m1_m0_90X90.png" value="out1/m1_m0_90X90.png" compare="contains"/>
-        <extra_files type="file" name="m1_m1_90X90.png" value="out1/m1_m1_90X90.png" compare="contains"/>
+        <extra_files type="file" name="m0_m0_90X90.png" value="out1/m0_m0_90X90.png" compare="sim_size"/>
+        <extra_files type="file" name="m0_m1_90X90.png" value="out1/m0_m1_90X90.png" compare="sim_size"/>
+        <extra_files type="file" name="m1_m0_90X90.png" value="out1/m1_m0_90X90.png" compare="sim_size"/>
+        <extra_files type="file" name="m1_m1_90X90.png" value="out1/m1_m1_90X90.png" compare="sim_size"/>
       </output>
     </test>
     <test>
@@ -73,28 +73,28 @@
         <extra_files type="file" name="flow.mfi_pop" value="out2/flow.mfi_pop"/>
         <extra_files type="file" name="flow.overview" value="out2/flow.overview"/>
         <extra_files type="file" name="flow.sample" value="out2/flow.sample"/>
-        <extra_files type="file" name="m0_m0_90X90.png" value="out2/m0_m0_90X90.png" compare="contains"/>
-        <extra_files type="file" name="m0_m1_90X90.png" value="out2/m0_m1_90X90.png" compare="contains"/>
-        <extra_files type="file" name="m1_m0_90X90.png" value="out2/m1_m0_90X90.png" compare="contains"/>
-        <extra_files type="file" name="m1_m1_90X90.png" value="out2/m1_m1_90X90.png" compare="contains"/>
+        <extra_files type="file" name="m0_m0_90X90.png" value="out2/m0_m0_90X90.png" compare="sim_size"/>
+        <extra_files type="file" name="m0_m1_90X90.png" value="out2/m0_m1_90X90.png" compare="sim_size"/>
+        <extra_files type="file" name="m1_m0_90X90.png" value="out2/m1_m0_90X90.png" compare="sim_size"/>
+        <extra_files type="file" name="m1_m1_90X90.png" value="out2/m1_m1_90X90.png" compare="sim_size"/>
         <extra_files type="file" name="scores.txt" value="out2/scores.txt"/>
-        <extra_files type="file" name="flowcl_pop01.pdf" value="out2/flowcl_pop01.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop01.pdf" value="out2/flowcl_pop01.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop01.txt" value="out2/flowcl_pop01.txt"/>
-        <extra_files type="file" name="flowcl_pop04.pdf" value="out2/flowcl_pop04.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop04.pdf" value="out2/flowcl_pop04.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop04.txt" value="out2/flowcl_pop04.txt"/>
-        <extra_files type="file" name="flowcl_pop07.pdf" value="out2/flowcl_pop07.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop07.pdf" value="out2/flowcl_pop07.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop07.txt" value="out2/flowcl_pop07.txt"/>
-        <extra_files type="file" name="flowcl_pop13.pdf" value="out2/flowcl_pop13.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop13.pdf" value="out2/flowcl_pop13.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop13.txt" value="out2/flowcl_pop13.txt"/>
-        <extra_files type="file" name="flowcl_pop14.pdf" value="out2/flowcl_pop14.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop14.pdf" value="out2/flowcl_pop14.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop14.txt" value="out2/flowcl_pop14.txt"/>
-        <extra_files type="file" name="flowcl_pop15.pdf" value="out2/flowcl_pop15.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop15.pdf" value="out2/flowcl_pop15.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop15.txt" value="out2/flowcl_pop15.txt"/>
-        <extra_files type="file" name="flowcl_pop19.pdf" value="out2/flowcl_pop19.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop19.pdf" value="out2/flowcl_pop19.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop19.txt" value="out2/flowcl_pop19.txt"/>
-        <extra_files type="file" name="flowcl_pop20.pdf" value="out2/flowcl_pop20.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop20.pdf" value="out2/flowcl_pop20.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop20.txt" value="out2/flowcl_pop20.txt"/>
-        <extra_files type="file" name="flowcl_pop23.pdf" value="out2/flowcl_pop23.pdf" compare="contains"/>
+        <extra_files type="file" name="flowcl_pop23.pdf" value="out2/flowcl_pop23.pdf" compare="sim_size"/>
         <extra_files type="file" name="flowcl_pop23.txt" value="out2/flowcl_pop23.txt"/>
       </output>
     </test>
