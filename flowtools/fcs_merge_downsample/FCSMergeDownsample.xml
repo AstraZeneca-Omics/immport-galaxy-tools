@@ -1,15 +1,17 @@
-<tool id="fcs_merge_downsample" name="Merge and downsample" version="1.0">
+<tool id="fcs_merge_downsample" name="Merge and downsample" version="1.0+galaxy1" profile="18.01">
   <description>FCS files with FlowSOM</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.18.0">bioconductor-flowsom</requirement>
   </requirements>
   <stdio>
+    <exit_code range="1:9" level="fatal" description="See stderr for more details." />
     <exit_code range="10" level="fatal" description="One or more FCS files is not valid. See stderr for more details." />
     <exit_code range="11" level="fatal" description="Please provide a numeric value [0,1] for the downsampling factor." />
     <exit_code range="12" level="fatal" description="There are inconsistencies in marker names between FCS files." />
+    <exit_code range="13:" level="fatal" description="See stderr for more details." />
   </stdio>
   <command><![CDATA[
-      FCSMergeDownsample.R '${output_file}' '${outformat}' '${factorDS}'
+      Rscript --slave --vanilla '$__tool_directory__/FCSMergeDownsample.R' '${output_file}' '${outformat}' '${factorDS}'
   #for $f in $input
     '${f}'
   #end for
@@ -57,9 +59,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool merges and downsamples multiple FCS files into one flowframe or FCS file using FlowSOM.
+Merge and downsample using FlowSOM
+-------------------
 
------
+This tool merges and downsamples multiple FCS files into one flowframe or FCS file using FlowSOM.
 
 **Input files**
 

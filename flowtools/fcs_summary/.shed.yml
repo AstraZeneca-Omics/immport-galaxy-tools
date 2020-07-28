@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: fcs_summary
 description: generates a summary of a FCS file and list of markers
 long_description: |

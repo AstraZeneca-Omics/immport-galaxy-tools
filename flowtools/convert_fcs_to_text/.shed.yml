@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: convert_fcs_to_text
 description: converts FCS files to text format with no tranformation
 long_description: |
@@ -7,7 +7,7 @@ long_description: |
 
     **Output file**
     The output is tab-separated text, containing the fluorescence intensity values for each marker
-    
+
     https://www.immportgalaxy.org
 categories:
     - Flow Cytometry Analysis

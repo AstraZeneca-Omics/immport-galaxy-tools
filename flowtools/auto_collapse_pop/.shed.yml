@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: auto_collapse_pop
 description: collapses populations together based on FLOCK score profiles
 long_description: |

@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: generate_mfi
 description: generates the Mean, Median or Geometric Mean Fluorescence Intensity of a FLOCK output file
 long_description: |
