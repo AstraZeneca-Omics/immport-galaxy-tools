@@ -1,7 +1,7 @@
 <tool id="edit_fcs_markers" name="Edit markers or channels" version="1.0">
   <description>in FCS files</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
   </requirements>
   <stdio>
     <exit_code range="10" level="fatal" description="Please provide a valid FCS file." />
@@ -11,13 +11,13 @@
     <exit_code range="14" level="fatal" description="Provided indices are out of range in the FCS file given as input." />
   </stdio>
   <command><![CDATA[
-	  editFCSmarkers.R '${input}' '${output_file}' '${outformat}' '${report}' '${columns}' '${colnames}' '${corm}'
+    Rscript --slave --vanilla '$__tool_directory__/editFCSmarkers.R' '${input}' '${output_file}' '${outformat}' '${report}' '${columns}' '${colnames}' '${corm}'
   ]]>
   </command>
   <inputs>
     <param format="fcs" name="input" type="data" label="Text file"/>
-    <param name="columns" type="text" label="Indices of channels or markers to modify:" value="i.e.:1,2,5" help="If you're not sure, check your markers with the list of markers tool in the FCS File Tools section."/>
-    <param name="colnames" type="text" label="New column headings:" value="i.e.:Marker1,Marker6,Marker4" optional="true" help="By default, will not change the column headings. Check below for more details.">
+    <param name="columns" type="text" label="Channels or markers to modify" help="These are comma separated (ie.: 'ColX,ColY'). The column names provided need to exist in the flowFrame / FCS file provided as input. If you're not sure, check your markers with the list of markers tool in the FCS File Tools section."/>
+    <param name="colnames" type="text" label="New column headings" help="New names for the column headers, a comma separated list of the same lenght as 'Channels or markers to modify' (i.e.: 'Marker1,Marker6,Marker4'). Check below for more details.">
     </param>
     <param name="corm" type="select" label="Modify Channels or Markers?" help="If you are not sure which to modify, check with the list of marker tools in the FCS File Tools section.">
       <option value="M">Markers</option>
@@ -39,7 +39,7 @@
   <tests>
     <test>
       <param name="input" value="input.fcs"/>
-      <param name="columns" value="1,2,6"/>
+      <param name="columns" value="Forward Scatter,Side Scatter,APC CD45RA"/>
       <param name="colnames" value="m1,m2,m3"/>
       <param name="corm" value="M"/>
       <param name="outformat" value="flowFrame"/>
@@ -48,7 +48,7 @@
     </test>
     <test>
       <param name="input" value="input.fcs"/>
-      <param name="columns" value="1,2,6"/>
+      <param name="columns" value="FSC-H,SSC-H,FL4-H"/>
       <param name="colnames" value="m1,m2,m3"/>
       <param name="corm" value="C"/>
       <param name="outformat" value="FCS"/>
@@ -65,9 +65,9 @@
 
 This tool requires FCS files as input.
 
-**Column indices**
+**Column names**
 
-Please indicate the indices of the markers to edit (comma-separated list).
+Please indicate the names of the markers / channels to edit (comma-separated list).
 
 .. class:: infomark
 
@@ -100,7 +100,7 @@ The output contains the input data with new marker or channel names. Output can 
 
 *Example 1*
 
-- Indices: 1,3,5
+- Indices: Marker1,Marker3,Marker5
 - Column names: Marker7,Marker8,Marker9
 
 *Output1*::

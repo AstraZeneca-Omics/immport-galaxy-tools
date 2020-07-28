@@ -50,8 +50,10 @@ script:
 - |
   while read -r DIR; do
     planemo lint -r --report_level error "$DIR"
-    planemo test "$DIR"
   done < changed_repositories.list
-
+- |
+  while read -r DIR; do
+    planemo test --galaxy_python_version 3.7 "$DIR"
+  done < changed_repositories.list
 notifications:
   email: false

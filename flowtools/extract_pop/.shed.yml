@@ -1,4 +1,4 @@
-owner: iuc
+owner: immport-devteam
 name: extract_pop
 description: extracts events from given populations from FLOCK or Cross Sample outputs
 long_description: |

@@ -1,7 +1,7 @@
-<tool id="flowsom_compare" name="Compare Samples" version="1.0">
+<tool id="flowsom_compare" name="Compare Samples" version="1.0+galaxy1">
   <description>using a FlowSOM tree</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.18.0">bioconductor-flowsom</requirement>
   </requirements>
   <stdio>
     <exit_code range="10" level="fatal" description="Please provide valid input FCS files." />
@@ -11,7 +11,7 @@
     <exit_code range="14" level="fatal" description="Some FCS files are used more than once." />
   </stdio>
   <command><![CDATA[
-    FlowSOMCompare.R '${reftree}' '${groups}' '${plot}' '${thresh}'
+    Rscript $__tool_directory__/FlowSOMCompare.R '${reftree}' '${groups}' '${plot}' '${thresh}'
   #if $count == "TRUE"
     'counts' '${count_out}'
   #end if
@@ -115,9 +115,10 @@
     </test>
   </tests>
   <help><![CDATA[
-   This tool uses FlowSOM to compare two or more groups of files to a reference FlowSOM tree.
+Compare sample
+-------------------
 
------
+This tool uses FlowSOM to compare two or more groups of files to a reference FlowSOM tree.
 
 **Input**
 

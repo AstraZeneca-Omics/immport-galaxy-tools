@@ -1,13 +1,13 @@
-<tool id="extract_fcs_keywords" name="Extract keywords" version="1.0">
+<tool id="extract_fcs_keywords" name="Extract keywords" version="1.0+galaxy1">
   <description>from FCS files</description>
   <requirements>
-    <requirement type="package" version="2.0.2">ig-flowtools</requirement>
+    <requirement type="package" version="1.42.0">bioconductor-flowcore</requirement>
   </requirements>
   <stdio>
     <exit_code range="1:" />
   </stdio>
   <command><![CDATA[
-    FCSKeyword.R '${input}' '${keyword_file}'
+    Rscript $__tool_directory__/FCSKeyword.R '${input}' '${keyword_file}'
   ]]>
   </command>
   <inputs>

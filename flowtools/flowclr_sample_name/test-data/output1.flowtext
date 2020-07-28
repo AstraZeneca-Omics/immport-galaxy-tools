@@ -1,0 +1,12 @@
+FSC	SSC	CD4	CCR7	CD8	CCR3	Population	Sample
+289	56	438	0	626	480	3	input1.flowclr
+352	153	30	147	483	386	6	input1.flowclr
+383	190	156	228	734	408	7	input1.flowclr
+261	62	432	121	598	555	3	input1.flowclr
+289	56	438	0	626	480	3	input2.flowclr
+352	153	30	147	483	386	6	input2.flowclr
+261	62	432	121	598	555	3	input2.flowclr
+289	56	438	0	626	480	3	input3.flowclr
+352	153	30	147	483	386	6	input3.flowclr
+383	190	156	228	734	408	7	input3.flowclr
+261	62	432	121	598	555	3	input3.flowclr
