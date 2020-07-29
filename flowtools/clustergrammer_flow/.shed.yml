@@ -1,4 +1,4 @@
-owner: immport-devteam
+owner: azomics
 name: clustergrammer_flow
 description: generates a heat map from the provided input matrix using Clustergrammer
 long_description: |

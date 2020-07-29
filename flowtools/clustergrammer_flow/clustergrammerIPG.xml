@@ -26,6 +26,9 @@
           '${catlabel.indices}'
         #end for
       #end for
+      ;
+      cp -r '$__tool_directory__'/js '${html_file.files_path}'/;
+      cp -r '$__tool_directory__'/css '${html_file.files_path}'/;
   ]]>
   </command>
   <inputs>
@@ -63,7 +66,7 @@
     <test>
       <param name="input_matrix" value="test.flowmfi"/>
       <output name="html_file" file="heatmap.html">
-        <extra_files type="file" name="mult_view.json" value="mult_view.json" compare="contains"/>
+        <extra_files type="file" name="mult_view.json" value="mult_view.json"/>
       </output>
     </test>
   </tests>
