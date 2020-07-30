@@ -5,7 +5,7 @@
 # This tool converts a flowtext file (or tabular file) into a SingleCellExperiment object
 # The tool was written by Emily Combe and edited by Pablo Moreno
 #
-# There are the options to choose the columns/markers to include in the assay; and the columns to include in the meta data.
+# There are the options to choose: the columns/markers to include in the assay, the columns to include in the meta data, descriptions of the markers and a metadata file.
 # 
 #
 #
@@ -14,8 +14,7 @@
 
 
 library(SingleCellExperiment)
-library(optparse)
-library(dplyr)
+#library(dplyr) - no longer needed
 
 suppressPackageStartupMessages(library("optparse"))
 
@@ -208,8 +207,8 @@ if (args[6]=="None") {
         for (mt in mark_type){
             if (is.na(mt)){
                 quit(save = "no", status = 12, runLast = FALSE)
-            }
-        }
+            } 
+        } 
     }
 }
 
