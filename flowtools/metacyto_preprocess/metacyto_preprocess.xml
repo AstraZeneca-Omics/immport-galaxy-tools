@@ -49,9 +49,43 @@
   <outputs>
     <data format="metacyto_summary.txt" name="output_file" label="MetaCyto pre-processing samples summary"/>
     <collection type="list" label="MetaCyto pre-processed samples" name="output">
-        <discover_datasets pattern="(?P&lt;name&gt;.*)" directory="processed_fcs" format="fcs" />
+        <discover_datasets pattern="(?P&lt;name&gt;.*)" directory="preprocessed_fcs" format="fcs" />
     </collection>
   </outputs>
+  <tests>
+    <test>
+      <param name="sampling" value="1000"/>
+      <param name="excluded_param" value="FSC-A,FSC-W,FSC-H,Time,Cell_length"/>
+      <param name="g1_name" value="SDY376"/>
+      <repeat name="fcs_set">  
+	<param name="fcs">
+          <collection type="list">
+            <element name="inputflow1" value="inputflow1.fcs"/>
+            <element name="inputflow2" value="inputflow2.fcs"/>
+	    <element name="inputflow3" value="inputflow3.fcs"/> 
+	    <element name="inputflow4" value="inputflow4.fcs"/> 
+	    <element name="inputflow5" value="inputflow5.fcs"/> 
+	    <element name="inputflow6" value="inputflow6.fcs"/> 
+	  </collection>
+        </param>
+        <param name="g1_format" value="FCM"/>
+        <param name="gp_scaling_factor" value="150"/>
+      </repeat>
+      <repeat name="fcs_set">
+        <param name="gp_name" value="SDY376"/>
+        <param name="fcs">
+          <collection type="list">
+            <element name="inputcytof1" value="inputcytof1.fcs"/>
+            <element name="inputcytof2" value="inputcytof2.fcs"/>
+	    <element name="inputcytof3" value="inputcytof3.fcs"/> 
+	    <element name="inputcytof4" value="inputcytof4.fcs"/> 
+	  </collection>
+        </param>
+        <param name="gp_format" value="CyTOF"/>
+        <param name="gp_scaling_factor" value="8"/>
+      </repeat>
+    <test>  
+  </tests>
   <help><![CDATA[
 Pre-process samples
 -------------------
