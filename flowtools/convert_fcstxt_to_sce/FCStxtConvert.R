@@ -22,28 +22,11 @@ suppressPackageStartupMessages(library("optparse"))
 sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list(), meta_data = NULL) {
     
     
-    #-------------------#
-    # reading in inputs #
-    #-------------------#
+    #---------------------#
+    # reading in flowtext #
+    #---------------------#
     
     flowtext <- read.table(input, sep = "\t", header=T) 
-    
-    #selecting count data for each marker 
-    #transposing data. Columns = cells; and rows = features
-    
-    #--------------------#
-    # check inputs class #
-    #--------------------#
-    
-    ## meta data type 
-    if(!is.null(meta_data)){
-        if(grep(meta_data, pattern = "csv") != 0){
-            meta_data <- read.csv(meta_data, header=T, row.names=1)
-        } else {
-            meta_data <- read.table(meta_data, header = TRUE, sep = "\t", check.names = FALSE)
-        }
-        meta_data <- data.frame(meta_data, stringsAsFactors = FALSE)
-    }
     
     #----------------------------------#
     # extract-marker-fluorescence data # 
@@ -52,9 +35,9 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
     fl_cols_assay <- colnames(flowtext)
     
     if (length(fl_cols) > 0){
-        
+       
         if(length(fl_cols) > ncol(fl_cols_assay)){
-            quit(save = "no", status = 14, runLast = FALSE)
+            quit(save = "no", status = 13, runLast = FALSE)
         }
         fl_cols_assay <- fl_cols_assay[fl_cols]
     } else {
@@ -79,6 +62,7 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
     
     counts <- as.matrix(counts)
 
+    # transpose data into assay as columns=cells and rows=features.
     counts <- base::t(counts)
     
     colnames(counts) <- 1:ncol(counts)  
@@ -88,14 +72,14 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
     #coldata/meta data#
     #-----------------#
     
-    # by default any columns with sample names or cluster results will be extracted - additional columns to be included in the meta data can be specified here in mtd_cols argument
+    # by default any columns with sample names or cluster results will be extracted - to over ride this user must provide a comma separated list of column name (mtd_cols)
     
     mtd_cols_assay <- colnames(flowtext)
     
     if (length(mtd_cols) > 0){
         
         if(length(mtd_cols) > ncol(mtd_cols_assay)){
-            quit(save = "no", status = 15, runLast = FALSE)
+            quit(save = "no", status = 14, runLast = FALSE)
         }
         
         mtd_cols_assay <- mtd_cols_assay[mtd_cols]
@@ -122,10 +106,10 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
         
         #quit if < 1 or > 1 column names match
         if(length(intersect(md_col, mtd_col)) == 0){
-            quit(save = "no", status = 16, runLast = FALSE)
+            quit(save = "no", status = 15, runLast = FALSE)
         }
         if(length(intersect(md_col, mtd_col)) > 1){
-            quit(save = "no", status = 17, runLast = FALSE)
+            quit(save = "no", status = 16, runLast = FALSE)
         }
         
         md_intersect <- colnames(md)[intersect(md_col, mtd_col)]
@@ -146,6 +130,10 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
     
     if(length(marker_type) > 0){
         
+	if(length(marker_type) != nrow(rowData(sce))){
+	    quit(save = "no", status = 17, runLast = FALSE)
+	}
+
         marker_type[marker_type == "l"] <- "lineage"
         marker_type[marker_type == "f"] <- "functional"
         
@@ -159,8 +147,11 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
 
 
 args <- commandArgs(trailingOnly = TRUE)
+
+
 fl_channels <- list()
 
+# fluorescence markers to include in the assay
 if (args[3]=="None") {
     flag_default <- TRUE
 } else {
@@ -176,7 +167,7 @@ if (args[3]=="None") {
     }
 }
 
-
+# meta data columns to go into colDaa in SCE
 mt_channels <- list()
 
 if (args[4]=="None") {
@@ -188,13 +179,14 @@ if (args[4]=="None") {
         mt_channels <- as.character(strsplit(args[4], ",")[[1]])
         for (channel in mt_channels){
             if (is.na(channel)){
-                quit(save = "no", status = 12, runLast = FALSE)
+                quit(save = "no", status = 11, runLast = FALSE)
             }
         }
     }
 }
 
 
+#metadata file to add to the coldata in SCE. Must have column matching the sample column in the flowtext file
 md <- NULL
 
 if (args[5]=="None") {
@@ -203,7 +195,7 @@ if (args[5]=="None") {
     md <- read.table(args[5], header = TRUE, sep = "\t", check.names = FALSE, as.is = FALSE)
 }
 
-
+#comma separated list of values to define the markers included in the assay
 mark_type <- list()
 
 if (args[6]=="None") {
@@ -215,7 +207,7 @@ if (args[6]=="None") {
         mark_type <- as.character(strsplit(args[6], ",")[[1]])
         for (mt in mark_type){
             if (is.na(mt)){
-                quit(save = "no", status = 13, runLast = FALSE)
+                quit(save = "no", status = 12, runLast = FALSE)
             }
         }
     }
