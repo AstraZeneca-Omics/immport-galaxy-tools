@@ -1,0 +1,3 @@
+Sample	Patient_ID	Sex	Age
+sample1	7245	female	54
+sample2	1423	male	26

@@ -1,0 +1,13 @@
+owner: azomics
+name: convert_fcstxt_to_sce
+description: Convert a flowtext file to a Single Cell Experiment object.
+long_description: |
+    **Input**
+    A single tabular file or flowtext file.
+
+    **Output**
+    A Single Cell Experiment object with the fluorescence data in the assay section. Meta data in the colData section and marker information in the rowData section of the Single Cell Experiment.
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/develop/flowtools/convert_fcstxt_to_sce
+type: unrestricted
