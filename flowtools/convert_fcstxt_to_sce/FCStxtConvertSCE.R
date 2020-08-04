@@ -97,18 +97,15 @@ sce <- function(input, fl_cols = list(), mtd_cols = list(), marker_type = list()
             quit(save = "no", status = 16, runLast = FALSE)
         }
 
-        md_intersect <- colnames(md)[intersect(md_col, mtd_col)]
-        mtd_intersect <- colnames(meta_data)[intersect(mtd_col, md_col)]
-
         #merge by matched column
-        meta_data <- merge(x = md, y = meta_data, by.x = md_intersect, by.y = mtd_intersect, all=T)
+        meta_data <- merge(x = md, y = meta_data, all=T)
 
     }
 
     #create Single Cell experiment object. SCOPE requires both counts and logcounts assays - for FLOW both assays contain the same data
     sce <- SingleCellExperiment(assays = list(counts=counts, logcounts=counts))
     if(!is.null(meta_data)) {
-      colLabels(sce)<-metadata
+      colLabels(sce)<-meta_data
     }
 
 

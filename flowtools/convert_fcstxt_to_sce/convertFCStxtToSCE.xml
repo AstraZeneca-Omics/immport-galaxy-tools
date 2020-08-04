@@ -46,14 +46,14 @@
     <tests>
         <test>
             <param name="input" value="input.flowtext"/>
-            <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
+            <output name="output_sce" file="output.rds" ftype="rdata.sce" compare="sim_size"/>
         </test>
         <test>
             <param name="input" value="input.flowtext"/>
             <param name="fl_cols" value="Marker1,Marker2,Marker3,Marker4"/>
             <param name="mtd_cols" value="Population,Sample"/>
             <param name="marker_type" value="f,l,f,l"/>
-            <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
+            <output name="output_sce" file="output.rds" ftype="rdata.sce" compare="sim_size"/>
         </test>
         <test>
             <param name="input" value="input.flowtext"/>
@@ -61,7 +61,7 @@
             <param name="fl_cols" value="Marker1,Marker2,Marker3,Marker4"/>
             <param name="mtd_cols" value="Population,Sample"/>
             <param name="marker_type" value="f,l,f,l"/>
-            <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
+            <output name="output_sce" file="output.rds" ftype="rdata.sce" compare="sim_size"/>
         </test>
     </tests>
     <help><![CDATA[:A
