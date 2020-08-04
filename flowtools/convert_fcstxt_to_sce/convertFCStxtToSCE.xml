@@ -1,29 +1,43 @@
-<tool id="convert_fcstxt_to_sce" name="Convert flowtext file to SCE:" version="1.0+galaxy1">
+<tool id="convert_fcstxt_to_sce" name="Convert flowtext file to SCE" version="1.0+galaxy0" profile="18.01">
     <description>Single Cell Experiment</description>
     <requirements>
-        <requirement type="package" version="1.2.0">bioconductor-SingleCellExperiment</requirement>
+        <requirement type="package" version="1.10.1">bioconductor-singlecellexperiment</requirement>
+        <requirement type="package" version="1.6.6">r-optparse</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:9" level="fatal" description="See stderr for more details." />
         <exit_code range="10" level="fatal" description="Please provide comma separated chacter strings, of the columns to include in the assay" />
         <exit_code range="11" level="fatal" description="Please provide comma separted chacter strings, of the columns to include in the meta data." />
-        <exit_code range="12" level="fatal" description="Please provide comma separated chacter strings, defining the marker type (included in the assay)." />  
+        <exit_code range="12" level="fatal" description="Please provide comma separated chacter strings, defining the marker type (included in the assay)." />
         <exit_code range="13" level="fatal" description="Provided column names for the assay are out of range in the flowtext file given as input." />
         <exit_code range="14" level="fatal" description="Provided column names for the metadata are out of range in the flowtext file given as input." />
         <exit_code range="15" level="fatal" description="Please provide a metadata file with the 'sample' column name matching the 'sample' column name in the flowtext file." />
         <exit_code range="16" level="fatal" description="Please make sure that only one of the column names in the flowtext file and metadata file match (the sample column)." />
         <exit_code range="17" level="fatal" description="Please provide the same number of marker types, as there are markers in the assay." />
+        <exit_code range="18:"/>
     </stdio>
     <command><![CDATA[
-        Rscript $__tool_directory__/FCStxtConvertSCE.R '${input}' '${output_sce}' '${fl_cols}' '${mtd_cols}' '${meta_data}' '${marker_type}' 
+        Rscript '$__tool_directory__'/FCStxtConvertSCE.R -i '${input}' -o '${output_sce}'
+        #if $fl_cols
+        --fl_cols '${fl_cols}'
+        #end if
+        #if $mtd_cols
+        --metadata_columns '${mtd_cols}'
+        #end if
+        #if $meta_data
+        --metadata_file '${meta_data}'
+        #end if
+        #if $marker_type
+        --marker_type '${marker_type}'
+        #end if
     ]]>
     </command>
     <inputs>
-        <param name="input" format="flowtext, tabular" multiple="false" label="Flow text file to be converted into a Single Cell Experiment object"/>
+        <param name="input" format="flowtext,tabular" type="data" label="Flow text file to be converted into a Single Cell Experiment object"/>
         <param name="meta_data" format="txt" type="data" label="Metadata file" optional="true" help="Optional meta data txt file to include in Single Cell Experiment. Please see below for formatting."/>
-        <param name="fl_cols" type="text"  value="i.e.:CD3, CD4, CD8" label="Columns with markers to be included in the Single Cell Experiment assay" help="By default, all columns except for FSC, SSC, time and Live-dead will be taken into account."/>
-        <param name="mtd_cols" type="text"  value="i.e.:Sample, Population" label="Columns to be included in the metadata of the Single Cell Experiment " help="By default, the 'Population' and 'Sample' columns will be included in the Coldata. The coldData stors meta data for each cell in the dataset."/>
-        <param name="marker_type" type="text" value="i.e: lineage, lineage, functional" label="Marker type" help="This section labels the markers included in the assay. Labels must be in order of the markers in flowtext file or in order of the markers selected for the assay. Proteins labelled as l will be replaced with lineage and those with 'f' will be replaced with functional. See below for more details."> 
+        <param name="fl_cols" type="text"  optional="true" label="Columns with markers to be included in the Single Cell Experiment assay" help="Comma-separated list of columns (i.e.:CD8,CD4,CD8). By default, all columns except for FSC, SSC, time and Live-dead will be taken into account."/>
+        <param name="mtd_cols" type="text"  optional="true" label="Columns to be included in the metadata of the Single Cell Experiment" help="Comma-separated list of columns (i.e.:Sample,Population). By default, the 'Population' and 'Sample' columns will be included in the Coldata. The coldData stors meta data for each cell in the dataset."/>
+        <param name="marker_type" type="text" optional="true" value="" label="Marker type" help="Comma-separated list of marker types (i.e: lineage,lineage,functional). This section labels the markers included in the assay. Labels must be in order of the markers in flowtext file or in order of the markers selected for the assay. Proteins labelled as l will be replaced with lineage and those with 'f' will be replaced with functional. See below for more details.">
         </param>
     </inputs>
     <outputs>
@@ -32,57 +46,52 @@
     <tests>
         <test>
             <param name="input" value="input.flowtext"/>
-            <param name="meta_data", value=NULL/>  
-            <param name="fl_cols", value="i.e.:CD3, CD4, CD8"/>  
-            <param name="mtd_cols", value="i.e.:Sample, Population"/>
-            <param name="marker_type" value="i.e: lineage, lineage, functional"/>
             <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
         </test>
         <test>
             <param name="input" value="input.flowtext"/>
-            <param name="meta_data", value=NULL/>  
-            <param name="fl_cols", value="Marker1, Marker2, Marker3, Marker4"/>  
-            <param name="mtd_cols", value="Population, Sample"/>
-            <param name="marker_type" value="f, l, f, l">
+            <param name="fl_cols" value="Marker1,Marker2,Marker3,Marker4"/>
+            <param name="mtd_cols" value="Population,Sample"/>
+            <param name="marker_type" value="f,l,f,l"/>
             <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
         </test>
         <test>
             <param name="input" value="input.flowtext"/>
-            <param name="meta_data", value="metadata.xlsx"/>  
-            <param name="fl_cols", value="Marker1, Marker2, Marker3, Marker4"/>  
-            <param name="mtd_cols", value="Population, Sample"/>
-            <param name="marker_type" value="f, l, f, l">
+            <param name="meta_data" value="metadata.txt"/>
+            <param name="fl_cols" value="Marker1,Marker2,Marker3,Marker4"/>
+            <param name="mtd_cols" value="Population,Sample"/>
+            <param name="marker_type" value="f,l,f,l"/>
             <output name="output_sce" file="output.rds" ftype="rdata" compare="sim_size"/>
         </test>
-    </tests> 
+    </tests>
     <help><![CDATA[:A
     This tool converts flow text files into a Single Cell Experiment object, with no tranformation or compensation.
-    
+
 -----
 
 **Input files**
 
 This tool requires a single valid flow text file. If you have multiple flowtext files please use the *Add sample information and merge tool* first.
 
-If metadata is supplied and there are multiple samples in the flowtext file; there must be a sample column in the metadata and flowtext file, with the same column name. The sample names within the column must also match. 
+If metadata is supplied and there are multiple samples in the flowtext file; there must be a sample column in the metadata and flowtext file, with the same column name. The sample names within the column must also match.
 For example if there is a column in the flow text file labelled Sample with 2 samples labelled 1 and 2; there must also be a column in the meta data fiel labelled 'Sample' containing 2 rows for each sample '1' and '2' with the relevant additional columns with metadata.
 
-By default the foward side scatter, side scatter columns, time, live dead stains, cluster info and sample columns will be discluded. 
+By default the foward side scatter, side scatter columns, time, live dead stains, cluster info and sample columns will be discluded.
 To override please supply a comma separated list of columns to include in the assay of the Single Cell Experiment.
 
-By default the columns which will be included in the meta data of the SCE will be the sample and cluster results. 
-To override this please supply 
+By default the columns which will be included in the meta data of the SCE will be the sample and cluster results.
+To override this please supply
 
-By default this 
+By default this
 
 **Output file**
 
 Support the following conversion:
- * flowtext file -> SingleCellExperiment 
- * tabular file -> SingleCellExperiment 
+ * flowtext file -> SingleCellExperiment
+ * tabular file -> SingleCellExperiment
 
-The output of this tool is a Single Cell Experiment object. This is an R object which contains slots for fluorescence data (assay) and metaData (colData). Please the image below. 
-Converting to a SCE object will allow you to run tools for single cell RNAseq on your cytometry data. 
+The output of this tool is a Single Cell Experiment object. This is an R object which contains slots for fluorescence data (assay) and metaData (colData). Please the image below.
+Converting to a SCE object will allow you to run tools for single cell RNAseq on your cytometry data.
 
 For more information on Single Cell Experiment objects please refer to the picture below or the 'bioconductor page<https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html>'.
 
@@ -93,7 +102,7 @@ For more information on Single Cell Experiment objects please refer to the pictu
 *Input*: flow text file
 
   FSC      SSC     Marker1 Marker2 Marker3 Marker4 Population  Sample
-  449      157     551     129     169     292     1           sample1 
+  449      157     551     129     169     292     1           sample1
   894      1023    199     277     320     227     3           sample1
   262      73      437     69      0       146     6           sample1
   340      115     509     268     0       74      1           sample1
@@ -107,10 +116,10 @@ For more information on Single Cell Experiment objects please refer to the pictu
 *Input*: Metadata Table
    Sample     Pateint ID  Sex      Age    ...
    sample1    7245        female   54     ...
-   sample2    1423        male     36     ... 
-   ...        ...         ...      ...    ... 
+   sample2    1423        male     36     ...
+   ...        ...         ...      ...    ...
 
-*Output*: Single Cell Experient object 
+*Output*: Single Cell Experient object
 
 .. image:: ./images/sce_modified.png
 
