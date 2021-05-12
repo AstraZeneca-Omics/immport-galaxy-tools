@@ -1,0 +1,121 @@
+<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" python_template_version="3.5">
+    <requirements>
+      <requirement type="package" version="0.1.0">r-autospill</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+      mkdir input_dir;
+      #for $fcs in $fcs_list:
+        ln -s '$fcs' input_dir/'$fcs.element_identifier';
+      #end for 
+
+      ## TODO Check that tabular file has the same number of lines that the collection of fcs files.
+      ## Check that files given in the tabular file exist in the inputs directory.
+
+      Rscript '$auto_spill_calculate_compensate' input_dir '$fcs_metadata'
+      ]]></command>
+     <configfiles>
+      <configfile name="auto_spill_calculate_compensate"><![CDATA[
+## calculate_compensation_paper.r
+##
+## Copyright (c) 2020 VIB (Belgium) and Babraham Institute (United Kingdom)
+##
+## Software written by Carlos P. Roca, as research funded by the European Union.
+##
+## This software may be modified and distributed under the terms of the MIT
+## license. See the LICENSE file for details.
+## Runs a calculation of compensation with autospill, creating all figures and
+## tables used in autospill paper.
+##
+## Requires being called as a batch script with the following two arguments:
+##     control.dir    directory with the set of single-color controls
+##     control.def.file    csv file defining the names and channels of the
+##         single-color controls
+
+
+library( autospill )
+
+
+## get directory and csv file with definition of control dataset
+
+args <- commandArgs( TRUE )
+
+if ( length( args ) != 2 ) {
+    cat( "ERROR: no arguments with directory and csv file with definition of control dataset",
+        file = stderr() )
+    stop()
+}
+
+control.dir <- args[[ 1 ]]
+control.def.file <- args[[ 2 ]]
+
+
+## set parameters
+asp <- get.autospill.param( "paper" )
+
+## read flow controls
+flow.control <- read.flow.control( control.dir, control.def.file, asp )
+
+## gate events before calculating spillover
+flow.gate <- gate.flow.data( flow.control, asp )
+
+## get initial spillover matrices from untransformed and transformed data
+marker.spillover.unco.untr <- get.marker.spillover( TRUE, flow.gate,
+    flow.control, asp )
+marker.spillover.unco.tran <- get.marker.spillover( FALSE, flow.gate,
+    flow.control, asp )
+
+## get spillover and compensation matrices with positive and negative
+## populations
+spillover.error.posnegpop <- process.posnegpop( marker.spillover.unco.untr,
+    flow.gate, flow.control, asp )
+
+## refine spillover matrix iteratively
+refine.spillover.result <- refine.spillover( marker.spillover.unco.untr,
+    marker.spillover.unco.tran, flow.gate, flow.control, asp )
+
+## plot results together for slope error and skewness
+pdf(file = "plot_results.pdf", width=4, height=4)
+plot_result.together( flow.control, asp )
+dev.off()
+
+
+## replot convergence adding spillover error from the calculation with positive
+## and negative populations
+pdf(file = "plot_convergence.pdf", width=4, height=4)
+plot_convergence( refine.spillover.result\$convergence,
+  spillover.error.posnegpop\$error\$slop, asp )
+dev.off()
+
+            ]]></configfile>
+    </configfiles>
+
+     <inputs>
+        <param type="data" name="fcs_list" format="fcs" multiple="true" label="Collection of control FCS files" />
+        <param type="data" name="fcs_metadata" format="csv" label="Auxiliary control file" help="Contains metadata for control list. It has to match original names of files upaloaded" />
+    </inputs>
+    <outputs>
+      <data name="plot_results" format="pdf" from_work_dir="plot_results.pdf" label="${tool.name} results plot on ${on_string}"/>
+      <data name="plot_convergence" format="pdf" from_work_dir="plot_convergence.pdf" label="${tool.name} convergence plot on ${on_string}"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="input1" value="control_dir"/>
+            <param name="input2" value="control_file"/>
+            <output name="output1" file="output"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+    <citations>
+        <citation type="bibtex">
+@misc{githubautospill,
+  author = {LastTODO, FirstTODO},
+  year = {TODO},
+  title = {autospill},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  url = {https://github.com/carlosproca/autospill},
+}</citation>
+    </citations>
+</tool>
