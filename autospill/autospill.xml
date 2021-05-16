@@ -11,7 +11,7 @@
       ## TODO Check that tabular file has the same number of lines that the collection of fcs files.
       ## Check that files given in the tabular file exist in the inputs directory.
 
-      Rscript '$auto_spill_calculate_compensate' input_dir '$fcs_metadata'
+      Rscript '$auto_spill_calculate_compensate' input_dir '$fcs_metadata' '$param_set'
       ]]></command>
      <configfiles>
       <configfile name="auto_spill_calculate_compensate"><![CDATA[
@@ -39,63 +39,70 @@ library( autospill )
 
 args <- commandArgs( TRUE )
 
-if ( length( args ) != 2 ) {
-    cat( "ERROR: no arguments with directory and csv file with definition of control dataset",
+if ( length( args ) != 3 ) {
+    cat( "ERROR: no arguments with directory, csv file with definition of control dataset and parameter set",
         file = stderr() )
     stop()
 }
 
+
 control.dir <- args[[ 1 ]]
 control.def.file <- args[[ 2 ]]
+param_set<-args[[3]]
 
+asp <- get.autospill.param(param_set)
 
-## set parameters
-asp <- get.autospill.param( "paper" )
-
-## read flow controls
 flow.control <- read.flow.control( control.dir, control.def.file, asp )
 
 ## gate events before calculating spillover
+
 flow.gate <- gate.flow.data( flow.control, asp )
 
-## get initial spillover matrices from untransformed and transformed data
+
+## get initial spillover matrices from untransformed data
+
 marker.spillover.unco.untr <- get.marker.spillover( TRUE, flow.gate,
     flow.control, asp )
-marker.spillover.unco.tran <- get.marker.spillover( FALSE, flow.gate,
-    flow.control, asp )
 
-## get spillover and compensation matrices with positive and negative
-## populations
-spillover.error.posnegpop <- process.posnegpop( marker.spillover.unco.untr,
-    flow.gate, flow.control, asp )
 
 ## refine spillover matrix iteratively
+
 refine.spillover.result <- refine.spillover( marker.spillover.unco.untr,
-    marker.spillover.unco.tran, flow.gate, flow.control, asp )
+  NULL, flow.gate, flow.control, asp )
 
-## plot results together for slope error and skewness
-pdf(file = "plot_results.pdf", width=4, height=4)
-plot_result.together( flow.control, asp )
-dev.off()
+## Write outputs
+write.table(refine.spillover.result\$spillover, file = "spillover.txt", sep="\t", col.names = NA, quote=FALSE)
+write.table(refine.spillover.result\$compensation, file = "compensation.txt", sep="\t", col.names = NA, quote=FALSE)
+write.table(refine.spillover.result\$convergence, file = "convergence.txt", sep="\t", row.names=FALSE, quote=FALSE)
+write.table(refine.spillover.result\$error\$inte, file = "error_inte.txt", sep="\t", col.names=NA, quote=FALSE)
+write.table(refine.spillover.result\$error\$coef, file = "error_coef.txt", sep="\t", col.names=NA, quote=FALSE)
+write.table(refine.spillover.result\$error\$slop, file = "error_slop.txt", sep="\t", col.names=NA, quote=FALSE)
+write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="\t", col.names=NA, quote=FALSE)
 
 
-## replot convergence adding spillover error from the calculation with positive
-## and negative populations
-pdf(file = "plot_convergence.pdf", width=4, height=4)
-plot_convergence( refine.spillover.result\$convergence,
-  spillover.error.posnegpop\$error\$slop, asp )
-dev.off()
 
             ]]></configfile>
     </configfiles>
 
      <inputs>
         <param type="data" name="fcs_list" format="fcs" multiple="true" label="Collection of control FCS files" />
-        <param type="data" name="fcs_metadata" format="csv" label="Auxiliary control file" help="Contains metadata for control list. It has to match original names of files upaloaded" />
+        <param type="data" name="fcs_metadata" format="csv" label="Auxiliary control file" help="Contains metadata for control list. It has to match original names of FCS files uploaded, and those files need to be present in the Collection of control FCS files given." />
+        <param name="param_set" type="select" label="Parameter set" help="Predefined auto-spill parameters set, choose from 'Minimal', 'Final step', 'Paper', or 'Website'">
+          <option value="minimal" selected="true">Minimal</option>
+          <option value="final.step">Final step</option>
+          <option value="paper">Paper</option>
+          <option value="website">Website</option>
+        </param>
     </inputs>
     <outputs>
-      <data name="plot_results" format="pdf" from_work_dir="plot_results.pdf" label="${tool.name} results plot on ${on_string}"/>
-      <data name="plot_convergence" format="pdf" from_work_dir="plot_convergence.pdf" label="${tool.name} convergence plot on ${on_string}"/>
+      <data name="spillover_matrix" format="tabular" from_work_dir="spillover.txt" label="${tool.name} spillover matrix on ${on_string}"/>
+      <data name="compensation_matrix" format="tabular" from_work_dir="compensation.txt" label="${tool.name} compensation matrix on ${on_string}"/>
+      <data name="convergence_matrix" format="tabular" from_work_dir="convergence.txt" label="${tool.name} convergence table on ${on_string}"/>
+      <data name="error_inte_matrix" format="tabular" from_work_dir="error_inte.txt" label="${tool.name} error intercepts matrix on ${on_string}"/>
+      <data name="error_coef_matrix" format="tabular" from_work_dir="error_coef.txt" label="${tool.name} error coefficients matrix on ${on_string}"/>
+      <data name="error_skew_matrix" format="tabular" from_work_dir="error_skew.txt" label="${tool.name} error skewness matrix on ${on_string}"/>
+      <!-- <data name="plot_results" format="pdf" from_work_dir="plot_results.pdf" label="${tool.name} results plot on ${on_string}"/> -->
+      <!-- <data name="plot_convergence" format="pdf" from_work_dir="plot_convergence.pdf" label="${tool.name} convergence plot on ${on_string}"/> -->
     </outputs>
     <tests>
         <test>
@@ -110,12 +117,13 @@ dev.off()
     <citations>
         <citation type="bibtex">
 @misc{githubautospill,
-  author = {LastTODO, FirstTODO},
-  year = {TODO},
-  title = {autospill},
+  author = {Roca, Carlos},
+  year = {2020},
+  title = {autospill algorithm for calculating spillover coefficients, used to compensate or unmix flow cytometry data.},
   publisher = {GitHub},
   journal = {GitHub repository},
   url = {https://github.com/carlosproca/autospill},
-}</citation>
+  }</citation>
+    <citation type="doi">10.1101/2020.06.29.177196</citation>
     </citations>
 </tool>
