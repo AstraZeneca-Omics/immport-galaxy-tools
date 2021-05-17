@@ -1,0 +1,49 @@
+<tool id="flow-compensate" name="Flow compensate" description="compensates a set of FCS objects through a compensation matrix" version="0.1.0" python_template_version="3.5">
+    <requirements>
+      <requirement type="package" version="2.2.0">bioconductor-flowcore</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        mkdir -p input_dir;
+        #for $fcs in $fcs_list:
+          ln -s '$fcs' input_dir/'$fcs.element_identifier';
+        #end for 
+        mkdir -p output_dir;
+        Rscript '$compensate_script' '$compensation_matrix' input_dir output_dir
+      ]]></command>
+    <configfiles>
+      <configfile name="compensate_script"><![CDATA[
+library(flowCore)
+
+if ( length( args ) != 3 ) {
+    cat( "ERROR: no arguments with directory, matrix file for compensation and out_dir",
+        file = stderr() )
+    stop()
+}
+
+comp_matrix <- read.table(file=args[[ 1 ]], sep="\t", header=TRUE, check.names = FALSE)
+comp_matrix<-as.matrix(comp_matrix[,-1])
+## Square matrix, reuse colnames into rownames
+rownames(comp_matrix)<-colnames(comp_matrix)
+fcs_dir <- args[[ 2 ]]
+
+samp<-read.flowSet(files=list.files(path=fcs_dir, pattern=".*.fcs\$"), path=fcs_dir)
+
+samp<-compensate(samp, comp_matrix)
+
+write.flowSet(samp, outdir=args[[ 3 ]])
+
+    ]]</configfile>
+    </configfiles>
+    <inputs>
+        <param type="data" name="fcs_list" format="fcs" multiple="true" label="FCS files" help="FCS files to compensate using the provided matrix"/>
+        <param type="data" name="compensation_matrix" format="tabular" label="Matrix to use for compensation" />
+    </inputs>
+    <outputs>
+      <data name="compensated_fcs" format="fcs" label="${tool.name} compensated FCS files on ${on_string}">
+        <discover_datasets pattern="__designation_and_ext__" directory="output_dir" visible="true" />
+      </data>
+    </outputs>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>
