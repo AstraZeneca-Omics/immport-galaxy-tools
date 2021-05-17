@@ -74,11 +74,17 @@ refine.spillover.result <- refine.spillover( marker.spillover.unco.untr,
 write.table(refine.spillover.result\$spillover, file = "spillover.txt", sep="\t", col.names = NA, quote=FALSE)
 write.table(refine.spillover.result\$compensation, file = "compensation.txt", sep="\t", col.names = NA, quote=FALSE)
 write.table(refine.spillover.result\$convergence, file = "convergence.txt", sep="\t", row.names=FALSE, quote=FALSE)
+
+#if $get_error:
 write.table(refine.spillover.result\$error\$inte, file = "error_inte.txt", sep="\t", col.names=NA, quote=FALSE)
 write.table(refine.spillover.result\$error\$coef, file = "error_coef.txt", sep="\t", col.names=NA, quote=FALSE)
 write.table(refine.spillover.result\$error\$slop, file = "error_slop.txt", sep="\t", col.names=NA, quote=FALSE)
 write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="\t", col.names=NA, quote=FALSE)
+#end if
 
+#if $get_gates:
+## TODO
+#end if
 
 
             ]]></configfile>
@@ -93,14 +99,25 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
           <option value="paper">Paper</option>
           <option value="website">Website</option>
         </param>
+        <param type="boolean" name="get_error" label="Get error matrices/tables" help="If turned On, the tool will produce error matrices for intercepts, coefficients, slope and skewness" checked="false"/> 
+        <param type="boolean" name="get_gates" label="Get gating information" help="If turned On, gating parameters information will be produced" checked="false"/> 
     </inputs>
     <outputs>
       <data name="spillover_matrix" format="tabular" from_work_dir="spillover.txt" label="${tool.name} spillover matrix on ${on_string}"/>
       <data name="compensation_matrix" format="tabular" from_work_dir="compensation.txt" label="${tool.name} compensation matrix on ${on_string}"/>
       <data name="convergence_matrix" format="tabular" from_work_dir="convergence.txt" label="${tool.name} convergence table on ${on_string}"/>
-      <data name="error_inte_matrix" format="tabular" from_work_dir="error_inte.txt" label="${tool.name} error intercepts matrix on ${on_string}"/>
-      <data name="error_coef_matrix" format="tabular" from_work_dir="error_coef.txt" label="${tool.name} error coefficients matrix on ${on_string}"/>
-      <data name="error_skew_matrix" format="tabular" from_work_dir="error_skew.txt" label="${tool.name} error skewness matrix on ${on_string}"/>
+      <data name="error_inte_matrix" format="tabular" from_work_dir="error_inte.txt" label="${tool.name} error intercepts matrix on ${on_string}">
+        <filter>get_error</filter> 
+      </data>
+      <data name="error_coef_matrix" format="tabular" from_work_dir="error_coef.txt" label="${tool.name} error coefficients matrix on ${on_string}">
+        <filter>get_error</filter> 
+      </data>
+      <data name="error_slop_matrix" format="tabular" from_work_dir="error_slop.txt" label="${tool.name} error slope matrix on ${on_string}">
+        <filter>get_error</filter> 
+      </data>
+      <data name="error_skew_matrix" format="tabular" from_work_dir="error_skew.txt" label="${tool.name} error skewness matrix on ${on_string}">
+        <filter>get_error</filter> 
+      </data>
       <!-- <data name="plot_results" format="pdf" from_work_dir="plot_results.pdf" label="${tool.name} results plot on ${on_string}"/> -->
       <!-- <data name="plot_convergence" format="pdf" from_work_dir="plot_convergence.pdf" label="${tool.name} convergence plot on ${on_string}"/> -->
     </outputs>
