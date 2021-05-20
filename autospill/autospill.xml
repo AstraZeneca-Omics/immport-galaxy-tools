@@ -11,7 +11,16 @@
       ## TODO Check that tabular file has the same number of lines that the collection of fcs files.
       ## Check that files given in the tabular file exist in the inputs directory.
 
-      Rscript '$auto_spill_calculate_compensate' input_dir '$fcs_metadata' '$param_set' \${GALAXY_SLOTS:-1}
+      Rscript '$auto_spill_calculate_compensate' input_dir '$fcs_metadata' \${GALAXY_SLOTS:-1};
+
+      #if $get_figure_scatter:
+      mkdir all_scatter;
+      for suffix in \$(ls | grep figure_scatter | sed 's/figure_scatter_//'); do
+        for plot in \$(ls figure_scatter_\$suffix); do
+          mv figure_scatter_\$suffix/\$plot all_scatter/\${suffix}__\${plot};
+        done;
+      done;
+      #end if
       ]]></command>
      <configfiles>
       <configfile name="auto_spill_calculate_compensate"><![CDATA[
@@ -39,7 +48,7 @@ library( autospill )
 
 args <- commandArgs( TRUE )
 
-if ( length( args ) != 4 ) {
+if ( length( args ) != 3 ) {
     cat( "ERROR: no arguments with directory, csv file with definition of control dataset and parameter set",
         file = stderr() )
     stop()
@@ -48,21 +57,27 @@ if ( length( args ) != 4 ) {
 
 control.dir <- args[[ 1 ]]
 control.def.file <- args[[ 2 ]]
-param_set<-args[[3]]
+##param_set<-args[[3]]
 
 ## asp <- get.autospill.param(param_set)
 asp <- get.autospill.param()
 
+#if $get_figure_scatter: 
 ## triggers generation of compensation plots between pair of channels
-##asp\$figure.scatter.dir.base <- "figure_scatter"
+asp\$figure.scatter.dir.base <- "figure_scatter"
+#end if
+
+#if $get_gates:
 ## triggers generation of gate figures
 asp\$figure.gate.dir <- "figure_gate"    
+#end if
+
 ## triggers generation of a figure with a summary of convergence
 asp\$figure.convergence.dir <- "figure_convergence"
 asp\$table.spillover.dir <- "table_spillover" 
 
 ## Set workers through GALAXY_SLOTS
-asp\$worker.process.n<-args[[4]]
+asp\$worker.process.n<-args[[3]]
 
 flow.control <- read.flow.control( control.dir, control.def.file, asp )
 
@@ -75,7 +90,7 @@ flow.gate <- gate.flow.data( flow.control, asp )
 
 marker.spillover.unco.untr <- get.marker.spillover( TRUE, flow.gate,
   flow.control, asp )
-#if $param_set == "final.step":
+#if $get_figure_scatter or $get_gates:
 marker.spillover.unco.tran <- get.marker.spillover( FALSE, flow.gate,
   flow.control, asp )
 #else:
@@ -102,20 +117,22 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
 
 
 
+
             ]]></configfile>
     </configfiles>
 
      <inputs>
         <param type="data" name="fcs_list" format="fcs" multiple="true" label="Collection of control FCS files" />
         <param type="data" name="fcs_metadata" format="csv" label="Auxiliary control file" help="Contains metadata for control list. It has to match original names of FCS files uploaded, and those files need to be present in the Collection of control FCS files given." />
-        <param name="param_set" type="select" label="Parameter set" help="Predefined auto-spill parameters set, choose from 'Minimal', 'Final step', 'Paper', or 'Website'">
+        <!-- <param name="param_set" type="select" label="Parameter set" help="Predefined auto-spill parameters set, choose from 'Minimal', 'Final step', 'Paper', or 'Website'">
           <option value="minimal" selected="true">Minimal - no plot generation</option>
           <option value="final.step">Final step - plot generation</option>
           <option value="paper">Paper</option>
           <option value="website">Website</option>
-        </param>
+        </param> -->
+        <param type="boolean" name="get_figure_scatter" label="Get scatter" help="If turned On, the tool will produce scatter plots between setups" checked="true"/> 
         <param type="boolean" name="get_error" label="Get error matrices/tables" help="If turned On, the tool will produce error matrices for intercepts, coefficients, slope and skewness" checked="false"/> 
-        <param type="boolean" name="get_gates" label="Get gating information" help="If turned On, gating parameters information will be produced" checked="false"/> 
+        <param type="boolean" name="get_gates" label="Get gating information" help="If turned On, gating parameters information will be produced" checked="true"/> 
     </inputs>
     <outputs>
       <data name="spillover_matrix" format="tabular" from_work_dir="spillover.txt" label="${tool.name} spillover matrix on ${on_string}"/>
@@ -140,7 +157,13 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
       </collection> -->
       <collection name="gate_plots" label="${tool.name} gate plots on ${on_string}" type="list">
         <discover_datasets pattern="__designation_and_ext__" format="png" directory="figure_gate" />
+        <filter>get_gates</filter>
       </collection>
+      <collection name="scatter_plots" label="${tool.name} scatter plots on ${on_string}" type="list">
+        <discover_datasets pattern="__designation_and_ext__" format="png" directory="all_scatter" />
+        <filter>get_figure_scatter</filter>
+      </collection>
+
       <!-- 
       <collection name="compensation_plots" label="${tool.name} compensation plots on ${on_string}">
         <discover_datasets pattern="__designation_and_ext__" format="png" directory="figure_compensation" visible="true" />
