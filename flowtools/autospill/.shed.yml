@@ -1,0 +1,16 @@
+owner: azomics
+name: autospill
+description: a principled framework that simplifies the analysis of multichromatic flow cytometry data
+long_description: |
+    **Input**
+    This tool requires a collections of FCS files as input and a metadata
+    summary file
+
+    **Output**
+    A spillover matrix, a compensation matrix and optional plots to asses the
+    convergence and gating decisions on channels.
+
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/master/flowtools/autospill
+type: unrestricted

@@ -6,7 +6,7 @@
       mkdir input_dir;
       #for $fcs in $fcs_list:
         ln -s '$fcs' input_dir/'$fcs.element_identifier';
-      #end for 
+      #end for
 
       ## TODO Check that tabular file has the same number of lines that the collection of fcs files.
       ## Check that files given in the tabular file exist in the inputs directory.
@@ -57,24 +57,58 @@ if ( length( args ) != 3 ) {
 
 control.dir <- args[[ 1 ]]
 control.def.file <- args[[ 2 ]]
-##param_set<-args[[3]]
 
-## asp <- get.autospill.param(param_set)
 asp <- get.autospill.param()
 
-#if $get_figure_scatter: 
+## Reduced resolution of plots
+asp\$figure.width <- 3.25
+asp\$figure.height <- 2.60
+asp\$figure.margin <- 1.0
+
+asp\$figure.panel.line.size <- 0.5
+
+asp\$figure.axis.text.size <- 7.0
+asp\$figure.axis.title.size <- 7.0
+
+asp\$figure.convergence.point.size <- 1.0
+asp\$figure.convergence.line.size <- 0.4
+
+asp\$figure.density.line.size <- 0.4
+
+asp\$figure.gate.scale.expand <- 0.01
+asp\$figure.gate.point.size <- 0.4
+asp\$figure.gate.line.size <- 0.3
+asp\$figure.gate.bar.width <- 0.3
+asp\$figure.gate.bar.height <- 10.0
+asp\$figure.gate.bar.margin <- 0.0
+
+asp\$figure.matrix.point.size <- 1.2
+asp\$figure.matrix.line.size <- 0.4
+
+asp\$figure.scatter.alpha.gate.in <- 0.8
+asp\$figure.scatter.alpha.gate.out <- 0.2
+asp\$figure.scatter.point.size <- 0.6
+asp\$figure.scatter.line.size <- 0.5
+asp\$figure.scatter.error.label.size <- 3.0
+asp\$figure.scatter.error.label.pos.x <- 0.85
+asp\$figure.scatter.error.label.pos.y <- 0.05
+asp\$figure.scatter.axis.text.size <- 9.0
+asp\$figure.scatter.axis.title.size <- 9.0
+## Reduced resolution
+
+#if $get_figure_scatter:
 ## triggers generation of compensation plots between pair of channels
 asp\$figure.scatter.dir.base <- "figure_scatter"
 #end if
 
 #if $get_gates:
 ## triggers generation of gate figures
-asp\$figure.gate.dir <- "figure_gate"    
+asp\$figure.gate.dir <- "figure_gate"
 #end if
 
 ## triggers generation of a figure with a summary of convergence
 asp\$figure.convergence.dir <- "figure_convergence"
-asp\$table.spillover.dir <- "table_spillover" 
+asp\$table.spillover.dir <- "table_spillover"
 
 ## Set workers through GALAXY_SLOTS
 asp\$worker.process.n<-args[[3]]
@@ -90,7 +124,7 @@ flow.gate <- gate.flow.data( flow.control, asp )
 
 marker.spillover.unco.untr <- get.marker.spillover( TRUE, flow.gate,
   flow.control, asp )
-#if $get_figure_scatter or $get_gates:
+#if $get_figure_scatter:
 marker.spillover.unco.tran <- get.marker.spillover( FALSE, flow.gate,
   flow.control, asp )
 #else:
@@ -115,9 +149,6 @@ write.table(refine.spillover.result\$error\$slop, file = "error_slop.txt", sep="
 write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="\t", col.names=NA, quote=FALSE)
 #end if
 
-
-
-
             ]]></configfile>
     </configfiles>
 
@@ -130,9 +161,9 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
           <option value="paper">Paper</option>
           <option value="website">Website</option>
         </param> -->
-        <param type="boolean" name="get_figure_scatter" label="Get scatter" help="If turned On, the tool will produce scatter plots between setups" checked="true"/> 
-        <param type="boolean" name="get_error" label="Get error matrices/tables" help="If turned On, the tool will produce error matrices for intercepts, coefficients, slope and skewness" checked="false"/> 
-        <param type="boolean" name="get_gates" label="Get gating information" help="If turned On, gating parameters information will be produced" checked="true"/> 
+        <param type="boolean" name="get_figure_scatter" label="Get scatter" help="If turned On, the tool will produce scatter plots between setups" checked="true"/>
+        <param type="boolean" name="get_error" label="Get error matrices/tables" help="If turned On, the tool will produce error matrices for intercepts, coefficients, slope and skewness" checked="false"/>
+        <param type="boolean" name="get_gates" label="Get gating information" help="If turned On, gating parameters information will be produced" checked="true"/>
     </inputs>
     <outputs>
       <data name="spillover_matrix" format="tabular" from_work_dir="spillover.txt" label="${tool.name} spillover matrix on ${on_string}"/>
@@ -140,18 +171,18 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
       <data name="convergence_matrix" format="tabular" from_work_dir="convergence.txt" label="${tool.name} convergence table on ${on_string}"/>
       <data name="convergence_plot" format="png" from_work_dir="figure_convergence/autospill_convergence.png" label="${tool.name} convergence plot on ${on_string}"/>
       <data name="error_inte_matrix" format="tabular" from_work_dir="error_inte.txt" label="${tool.name} error intercepts matrix on ${on_string}">
-        <filter>get_error</filter> 
+        <filter>get_error</filter>
       </data>
       <data name="error_coef_matrix" format="tabular" from_work_dir="error_coef.txt" label="${tool.name} error coefficients matrix on ${on_string}">
-        <filter>get_error</filter> 
+        <filter>get_error</filter>
       </data>
       <data name="error_slop_matrix" format="tabular" from_work_dir="error_slop.txt" label="${tool.name} error slope matrix on ${on_string}">
-        <filter>get_error</filter> 
+        <filter>get_error</filter>
       </data>
       <data name="error_skew_matrix" format="tabular" from_work_dir="error_skew.txt" label="${tool.name} error skewness matrix on ${on_string}">
-        <filter>get_error</filter> 
+        <filter>get_error</filter>
       </data>
-      <!-- 
+      <!--
       <collection name="spillover_plots" label="${tool.name} spillover plots on ${on_string}">
         <discover_datasets pattern="__designation_and_ext__" format="png" directory="figure_spillover" visible="true" />
       </collection> -->
@@ -164,15 +195,10 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
         <filter>get_figure_scatter</filter>
       </collection>
 
-      <!-- 
+      <!--
       <collection name="compensation_plots" label="${tool.name} compensation plots on ${on_string}">
         <discover_datasets pattern="__designation_and_ext__" format="png" directory="figure_compensation" visible="true" />
       </collection> -->
-
-
-
-      <!-- <data name="plot_results" format="pdf" from_work_dir="plot_results.pdf" label="${tool.name} results plot on ${on_string}"/> -->
-      <!-- <data name="plot_convergence" format="pdf" from_work_dir="plot_convergence.pdf" label="${tool.name} convergence plot on ${on_string}"/> -->
     </outputs>
     <tests>
         <test>
@@ -182,7 +208,26 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
         </test>
     </tests>
     <help><![CDATA[
-        TODO: Fill in help.
+      Autospill: a principled framework that simplifies the analysis of multichromatic flow cytometry data
+      ------------------------------------------------------------------------------------------------------------
+
+      Calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively.
+
+      **Inputs**
+
+      - Collection of control FCS files
+      - Auxiliary control file: Contains metadata for control list. It has to match original names of FCS files uploaded, and those files need to be present in the Collection of control FCS files given. ​
+
+
+      **Output**
+
+      - Spillover matrix
+      - Compensation matrix
+      - convergence matrix
+      - convergence plot
+      - Gate plots
+      - Scatter plots between channels
+
     ]]></help>
     <citations>
         <citation type="bibtex">
@@ -194,6 +239,6 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
   journal = {GitHub repository},
   url = {https://github.com/carlosproca/autospill},
   }</citation>
-    <citation type="doi">10.1101/2020.06.29.177196</citation>
+    <citation type="doi">10.1038/s41467-021-23126-8</citation>
     </citations>
 </tool>

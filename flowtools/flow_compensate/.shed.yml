@@ -1,0 +1,15 @@
+owner: azomics
+name: flow_compensate
+description: Applies a compensation matrix to all FCSs files provided as a collection.
+long_description: |
+    **Input**
+    - Compensation matrix to compensate
+    - List of FCSs to compensate
+
+    **Output**
+    - Compensated list of FCSs files.
+
+categories:
+    - Flow Cytometry Analysis
+remote_repository_url: https://github.com/AstraZeneca-Omics/immport-galaxy-tools/tree/master/flowtools/flow_compensate
+type: unrestricted
