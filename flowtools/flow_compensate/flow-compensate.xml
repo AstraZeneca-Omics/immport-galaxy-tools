@@ -1,4 +1,7 @@
-<tool id="flow-compensate" name="Flow compensate" description="compensates a set of FCS objects through a compensation matrix" version="0.1.0" python_template_version="3.5">
+<tool id="flow-compensate" name="Flow compensate" version="0.1.0" profile="19.01" python_template_version="3.5">
+    <description>
+        compensates a set of FCS objects through a compensation matrix
+    </description>
     <requirements>
       <requirement type="package" version="2.2.0">bioconductor-flowcore</requirement>
     </requirements>

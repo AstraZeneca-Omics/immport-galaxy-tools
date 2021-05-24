@@ -1,4 +1,7 @@
-<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" description="calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively" python_template_version="3.5">
+<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" python_template_version="3.5">
+    <description>
+      calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively
+    </description>
     <requirements>
       <requirement type="package" version="0.1.0">r-autospill</requirement>
     </requirements>
@@ -200,13 +203,6 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
         <discover_datasets pattern="__designation_and_ext__" format="png" directory="figure_compensation" visible="true" />
       </collection> -->
     </outputs>
-    <tests>
-        <test>
-            <param name="input1" value="control_dir"/>
-            <param name="input2" value="control_file"/>
-            <output name="output1" file="output"/>
-        </test>
-    </tests>
     <help><![CDATA[
 Autospill: a principled framework that simplifies the analysis of multichromatic flow cytometry data
 ----------------------------------------------------------------------------------------------------
