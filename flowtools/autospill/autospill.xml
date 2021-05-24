@@ -1,4 +1,4 @@
-<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" python_template_version="3.5">
+<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" profile="19.01" python_template_version="3.5">
     <description>
       calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively
     </description>
