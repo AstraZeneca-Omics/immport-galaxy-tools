@@ -32,7 +32,7 @@ samp<-compensate(samp, comp_matrix)
 
 write.flowSet(samp, outdir=args[[ 3 ]])
 
-    ]]</configfile>
+	      ]]></configfile>
     </configfiles>
     <inputs>
         <param type="data" name="fcs_list" format="fcs" multiple="true" label="FCS files" help="FCS files to compensate using the provided matrix"/>

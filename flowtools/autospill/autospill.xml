@@ -1,4 +1,4 @@
-<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" python_template_version="3.5">
+<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" description="calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively" python_template_version="3.5">
     <requirements>
       <requirement type="package" version="0.1.0">r-autospill</requirement>
     </requirements>
@@ -208,25 +208,25 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
         </test>
     </tests>
     <help><![CDATA[
-      Autospill: a principled framework that simplifies the analysis of multichromatic flow cytometry data
-      ------------------------------------------------------------------------------------------------------------
+Autospill: a principled framework that simplifies the analysis of multichromatic flow cytometry data
+----------------------------------------------------------------------------------------------------
 
-      Calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively.
+Calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively.
 
-      **Inputs**
+**Inputs**
 
-      - Collection of control FCS files
-      - Auxiliary control file: Contains metadata for control list. It has to match original names of FCS files uploaded, and those files need to be present in the Collection of control FCS files given. ​
+- Collection of control FCS files
+- Auxiliary control file: Contains metadata for control list. It has to match original names of FCS files uploaded, and those files need to be present in the Collection of control FCS files given. ​
 
 
-      **Output**
+**Output**
 
-      - Spillover matrix
-      - Compensation matrix
-      - convergence matrix
-      - convergence plot
-      - Gate plots
-      - Scatter plots between channels
+- Spillover matrix
+- Compensation matrix
+- convergence matrix
+- convergence plot
+- Gate plots
+- Scatter plots between channels
 
     ]]></help>
     <citations>
