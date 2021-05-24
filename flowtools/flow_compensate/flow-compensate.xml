@@ -17,6 +17,8 @@
       <configfile name="compensate_script"><![CDATA[
 library(flowCore)
 
+args <- commandArgs( TRUE )
+
 if ( length( args ) != 3 ) {
     cat( "ERROR: no arguments with directory, matrix file for compensation and out_dir",
         file = stderr() )
@@ -42,9 +44,9 @@ write.flowSet(samp, outdir=args[[ 3 ]])
         <param type="data" name="compensation_matrix" format="tabular" label="Matrix to use for compensation" />
     </inputs>
     <outputs>
-      <data name="compensated_fcs" format="fcs" label="${tool.name} compensated FCS files on ${on_string}">
+      <collection name="compensated_fcs" format="fcs" label="${tool.name} compensated FCS files on ${on_string}" type="list">
         <discover_datasets pattern="__designation_and_ext__" directory="output_dir" visible="true" />
-      </data>
+      </collection>
     </outputs>
     <help><![CDATA[
         TODO: Fill in help.

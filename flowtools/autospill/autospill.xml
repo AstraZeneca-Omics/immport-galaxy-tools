@@ -63,6 +63,7 @@ control.def.file <- args[[ 2 ]]
 
 asp <- get.autospill.param()
 
+#if $get_figure_scatter or $get_gates:
 ## Reduced resolution of plots
 asp\$figure.width <- 3.25
 asp\$figure.height <- 2.60
@@ -98,6 +99,7 @@ asp\$figure.scatter.error.label.pos.y <- 0.05
 asp\$figure.scatter.axis.text.size <- 9.0
 asp\$figure.scatter.axis.title.size <- 9.0
 ## Reduced resolution
+#end if
 
 #if $get_figure_scatter:
 ## triggers generation of compensation plots between pair of channels
