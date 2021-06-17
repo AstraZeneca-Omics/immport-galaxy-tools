@@ -1,0 +1,4 @@
+filename,dye,antigen,wavelength
+Compensation Controls_FITC Stained Control_001.fcs,FITC-A,CD3/CD4/TCRb,525
+Compensation Controls_PE-CF594 Stained Control_025.fcs,PE-CF594-A,CD4,612
+Compensation Controls_PE-Cy5.5 Stained Control_027.fcs,PE-Cy5.5-A,CD3,678

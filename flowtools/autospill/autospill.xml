@@ -205,6 +205,20 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
         <discover_datasets pattern="__designation_and_ext__" format="png" directory="figure_compensation" visible="true" />
       </collection> -->
     </outputs>
+    <tests>
+      <test>
+        <param name="fcs_list" type="data" value="Compensation Controls_FITC Stained Control_001.fcs,Compensation Controls_PE-CF594 Stained Control_025.fcs,Compensation Controls_PE-Cy5.5 Stained Control_027.fcs"/>
+        <param name="fcs_metadata" type="data" value="fcs_control.csv" ftype="csv"/>
+        <param name="get_figure_scatter" type="boolean" value="false"/>
+        <param name="get_error" type="boolean" value="false"/>
+        <param name="get_gates" type="boolean" value="false"/>
+        <output name="spillover_matrix">
+          <assert_contents>
+            <has_n_lines n="4" />
+          </assert_contents>
+        </output>
+      </test>
+    </tests>
     <help><![CDATA[
 Autospill: a principled framework that simplifies the analysis of multichromatic flow cytometry data
 ----------------------------------------------------------------------------------------------------
