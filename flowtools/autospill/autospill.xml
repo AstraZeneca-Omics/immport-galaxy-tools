@@ -1,9 +1,9 @@
-<tool id="autospill" name="Autospill" version="0.1.0+galaxy0" profile="19.01" python_template_version="3.5">
+<tool id="autospill" name="Autospill" version="0.2.0+galaxy0" profile="19.01" python_template_version="3.5">
     <description>
       calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively
     </description>
     <requirements>
-      <requirement type="package" version="0.1.0">r-autospill</requirement>
+      <requirement type="package" version="0.2.0">r-autospill</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
       mkdir input_dir;
