@@ -1,4 +1,4 @@
-<tool id="flow-compensate" name="Flow compensate" version="0.1.0+galaxy1" profile="19.01" python_template_version="3.5">
+<tool id="flow-compensate" name="Flow compensate" version="0.1.0+galaxy0" profile="19.01" python_template_version="3.5">
     <description>
         compensates a set of FCS objects through a compensation matrix
     </description>
