@@ -1,4 +1,4 @@
-<tool id="clustergrammer_flow" name="Generate a heat map" version="1.1+galaxy0" profile="18.01">
+<tool id="clustergrammer_flow" name="Generate a heat map" version="1.1+galaxy1" profile="18.01">
   <description>of a flow analysis using Clustergrammer</description>
   <requirements>
     <requirement type="package" version="2.11.2">jinja2</requirement>
