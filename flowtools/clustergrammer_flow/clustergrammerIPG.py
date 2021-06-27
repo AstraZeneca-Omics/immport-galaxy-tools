@@ -13,12 +13,15 @@
 
 
 from __future__ import print_function
-import sys
+
 import os
+import sys
+
+from clustergrammer import Network
 
 from jinja2 import Environment, FileSystemLoader
+
 import pandas as pd
-from clustergrammer import Network
 
 
 def is_integer(s):
@@ -52,7 +55,8 @@ def get_indices(input_text):
     return(output_list)
 
 
-def prepare_heatmap(matrix_input, html_file, html_dir, tools_dir, categories, distance, linkage):
+def prepare_heatmap(matrix_input, html_file, html_dir, tools_dir,
+                    categories, distance, linkage):
     # prepare directory and html
     os.mkdir(html_dir)
 
@@ -91,7 +95,7 @@ if __name__ == "__main__":
         }
 
         tmp_string = "-=-".join(args[8:])
-        print (tmp_string + "\n")
+        print(tmp_string + "\n")
         # get categories
         cats = tmp_string.split("-=-new_cat-=-")
         for cat in cats:
@@ -118,5 +122,5 @@ if __name__ == "__main__":
             categories[tmp_cat[0]].append(group)
             print(categories)
 
-
-    prepare_heatmap(args[1], args[2], args[3], args[4], categories, args[5], args[6])
+    prepare_heatmap(args[1], args[2], args[3],
+                    args[4], categories, args[5], args[6])
