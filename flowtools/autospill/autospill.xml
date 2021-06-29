@@ -1,4 +1,4 @@
-<tool id="autospill" name="Autospill" version="0.2.0+galaxy0" profile="19.01" python_template_version="3.5">
+<tool id="autospill" name="Autospill" version="0.2.0+galaxy1" profile="19.01" python_template_version="3.5">
     <description>
       calculates spillover coefficients with robust linear models and then refines spillover coefficients iteratively
     </description>
@@ -115,6 +115,13 @@ asp\$figure.gate.dir <- "figure_gate"
 asp\$figure.convergence.dir <- "figure_convergence"
 asp\$table.spillover.dir <- "table_spillover"
 
+#if $remove_forbidden:
+for(c in strsplit('$remove_forbidden', split="")) {
+  print(paste0("Removing ",c," from forbidden characters..."))
+  asp\$marker.forbidden.char<-gsub(c, "", asp\$marker.forbidden.char)
+}
+#end if
+
 ## Set workers through GALAXY_SLOTS
 asp\$worker.process.n<-args[[3]]
 
@@ -166,6 +173,7 @@ write.table(refine.spillover.result\$error\$skew, file = "error_skew.txt", sep="
           <option value="paper">Paper</option>
           <option value="website">Website</option>
         </param> -->
+        <param type="text" name="remove_forbidden" value="" label="Remove characters from autospill's forbidden list of characters" help="Autospill considers all these characters ' !\#$%()*,/:;&amp;?@[\]^{|}~ plus double quotes as forbidden characters. List any of them here to remove them from that list - at a risk of breaking execution." />
         <param type="boolean" name="get_figure_scatter" label="Get scatter" help="If turned On, the tool will produce scatter plots between setups" checked="true"/>
         <param type="boolean" name="get_error" label="Get error matrices/tables" help="If turned On, the tool will produce error matrices for intercepts, coefficients, slope and skewness" checked="false"/>
         <param type="boolean" name="get_gates" label="Get gating information" help="If turned On, gating parameters information will be produced" checked="true"/>
@@ -229,7 +237,7 @@ Calculates spillover coefficients with robust linear models and then refines spi
 
 - Collection of control FCS files
 - Auxiliary control file: Contains metadata for control list. It has to match original names of FCS files uploaded, and those files need to be present in the Collection of control FCS files given. ​
-
+- Optional list of characters to remove from autospill's forbidden characters (that otherwise autospill replaces with '-').
 
 **Output**
 
